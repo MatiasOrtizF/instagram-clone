@@ -1,12 +1,18 @@
-import { Image } from 'react-native';
+import { Image , FlatList ,ScrollView } from 'react-native';
+import data from '../../data/data.json'
+import PostUno from './Post-uno'
 
-export default function PostProfile(post) {
+export default function PostProfile() {
 
     return (
-        <>
-                {post.images.map((img) =>
-                    <Image style={{width:"33%" , margin:1 , height:100}} source={{uri:img.image1}}></Image>
-                )}
-        </>
+                    <FlatList
+                        data={data.userInformation.post}
+                        keyExtractor={item=>item.id}
+                        renderItem={({item: post}) => (
+                            <PostUno {...post}/>
+                        )}
+                        numColumns={3}
+                        scrollEnabled={false}
+                    />  
     );
 }

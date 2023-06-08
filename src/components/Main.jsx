@@ -1,7 +1,7 @@
 import { Image , Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import Home from './home-components/Home'
+import MyStack from './home-components/MyStack'
 import Search from './Search-components/Search'
 import Plus from './Plus-components/Plus'
 import Reels from './Reels-components/Reels'
@@ -20,17 +20,22 @@ export default function Main() {
             <NavigationContainer>
                 <Tab.Navigator screenOptions={{HeaderShown: false}}>
                     <Tab.Screen
-                    name="Home"
-                    component={Home}
+                    name="MyStack"
+                    component={MyStack}
                     options={{
                         headerShown: false,
                         tabBarShowLabel: false,
                         tabBarIcon: ({focused}) => (
+                        focused ? 
+                        <Image
+                            source={require('../../assets/icons/home-icon-actived.png')}
+                            style={styles.icons} 
+                        />
+                        :
                         <Image
                             source={require('../../assets/icons/home-icon.png')}
                             style={styles.icons} 
-                        >
-                        </Image>
+                        />
                         )
                     }}
                     >
@@ -45,7 +50,7 @@ export default function Main() {
                         tabBarIcon: ({focused}) => (
                         <Image
                             source={require('../../assets/icons/search-icon.png')}
-                            style={styles.icons} 
+                            style={{width:25 , height:25 , tintColor: focused ? "black" : null}} 
                         >
                         </Image>
                         )
@@ -60,11 +65,16 @@ export default function Main() {
                         headerShown: false,
                         tabBarShowLabel: false,
                         tabBarIcon: ({focused}) => (
+                        focused ? 
                         <Image
                             source={require('../../assets/icons/plus-icon.png')}
+                            style={{width:27 , height:27}} 
+                        />
+                        :
+                        <Image
+                            source={require('../../assets/icons/plus-icon-actived.png')}
                             style={styles.icons} 
-                        >
-                        </Image>
+                        />
                         )
                     }}
                     >
@@ -77,11 +87,16 @@ export default function Main() {
                         headerShown: false,
                         tabBarShowLabel: false,
                         tabBarIcon: ({focused}) => (
+                        focused ?
                         <Image
                             source={require('../../assets/icons/reel-icon.png')}
                             style={styles.icons} 
-                        >
-                        </Image>
+                        />
+                            :
+                        <Image
+                            source={require('../../assets/icons/reel-icon-actived.png')}
+                            style={styles.icons} 
+                        />
                         )
                     }}
                     >
@@ -97,7 +112,7 @@ export default function Main() {
                         tabBarIcon: ({focused}) => (
                         <Image
                         source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}
-                        style={{width:27 , height:27 , borderRadius:100}}
+                        style={{width:30 , height:30 , borderRadius:100 , borderWidth:2 , borderColor: focused ? "black" : null}}
                         >
                         </Image>
                         )
