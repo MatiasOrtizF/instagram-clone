@@ -1,9 +1,9 @@
-import { Text, View , Image , ScrollView , TextInput} from 'react-native';
+import { Text, View , Image , ScrollView , TextInput , TouchableOpacity} from 'react-native';
 import styles from '../Styles';
 import Constants from 'expo-constants'
 import Stories from './Stories'
 import Post from './Post'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import Labelled from './Labelled';
 
 export default function Home({navigation}) {
     return (
@@ -14,7 +14,7 @@ export default function Home({navigation}) {
                     <TouchableOpacity onPress={()=> navigation.navigate('Notifications')}>
                         <Image style={styles.icons} source={require('../../../assets/icons/notifications-icon.png')}></Image>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> navigation.navigate('Messages')}>
+                        <TouchableOpacity onPress={()=> navigation.navigate('Messages')}>
                         <Image style={{marginLeft:20 , width:25,height:25}} source={require('../../../assets/icons/messenger-icon.png')}></Image>
                     </TouchableOpacity>
                 </View>
@@ -26,6 +26,8 @@ export default function Home({navigation}) {
                 <View style={{ backgroundColor: 'gray', height: 0.5 }} />
 
                 <Post/>
+
+                <Labelled/>
 
             </ScrollView>
         </View>

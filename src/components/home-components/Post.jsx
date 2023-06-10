@@ -1,10 +1,10 @@
-import { Text, View , Image , TouchableOpacity } from 'react-native';
+import { Text, View , Image , TouchableOpacity , TextInput} from 'react-native';
 import styles from '../Styles';
 import homeData from '../../data/home-data.json'
 import PostDetails from './Post-Details'
+// import { TextInput } from 'react-native-gesture-handler';
 
 export default function Post() {
-    console.log(homeData.post[0].id)
 
     const savePost = (id) => {
         console.log("guardar publicacion" + id)
@@ -36,10 +36,14 @@ export default function Post() {
                         {/* {post.images.map((img) => (
                             console.log(img)
                         ))} */}
-                        {Object.values(post.images[0]).map((img) => (
+                        {Object.values(post.images[0]).length > 1 ?
+                        Object.values(post.images[0]).map(() => (
                             // <Image style={{width:9 , height:9}} source={require("../../../assets/icons/point-actived-icon.png")}></Image>
                             <Image style={{width:14 , height:14}} source={require("../../../assets/icons/point-icon.png")}></Image>
-                        ))}
+                        ))
+                        :
+                        null
+                    }
                         {/* <Image style={{width:9 , height:9}} source={require("../../../assets/icons/point-actived-icon.png")}></Image> */}
                     </View>
                     <View style={{width:"33%", alignItems:"flex-end"}}>
@@ -58,13 +62,29 @@ export default function Post() {
                         <Text style={{fontWeight:700}}>{post.userName} </Text>
                         <Text>{post.content}</Text>
                     </Text>
-                    <Text style={{color:"gray"}}>Ver los 3,397 comentarios</Text>
+                    {/* Si el largo de coomments es > 1 hace esto:*/}
+                    {post.comments.length > 1 ? 
+                        <Text style={{color:"gray"}}>Ver los {post.comments.length} comentarios </Text>
+                        :
+                        null
+                    }
+                    {post.comments.length > 1 ?
+                        post.comments.slice(0,2).map((comment) => (
+                            <Text>
+                                <Text style={{fontWeight:700}}>{comment.userName + " "}</Text>
+                                <Text>{comment.comment}</Text>
+                            </Text>
+                        )) 
+                        :
+                        null
+                    }
+                    {/* <Text style={{color:"gray"}}>Ver los {post.comments.length} comentarios </Text>
                         {post.comments.map((comment) => (
                             <Text>
                                 <Text style={{fontWeight:700}}>{comment.userName + " "}</Text>
                                 <Text>{comment.comment}</Text>
                             </Text>
-                        ))}
+                        ))} */}
                     <Text style={{color:"gray"}}>{post.createdAt}</Text>
                 </View>
             </View>
