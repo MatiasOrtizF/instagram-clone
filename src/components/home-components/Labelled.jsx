@@ -57,6 +57,7 @@ export default function Labelled({route}) {
                         </View>
                     </View>
                 )}
+
             </View>
         </View>
 
