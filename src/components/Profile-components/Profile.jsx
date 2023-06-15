@@ -7,7 +7,7 @@ import Etiqueta from './Etiqueta'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Nose from './Nose'
 
-export default function Profile() {
+export default function Profile({navigation}) {
     openURL = (url) => {
         Linking.openURL(url)
     }
@@ -47,14 +47,14 @@ export default function Profile() {
                                 <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{data.userInformation.post.length}</Text>
                                 <Text>Publicaciones</Text>
                             </View>
-                            <View>
+                            <TouchableOpacity onPress={()=> navigation.navigate('Followers')}>
                                 <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{data.userInformation.numberFollowers}</Text>
                                 <Text>Seguidores</Text>
-                            </View>
-                            <View>
-                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{data.userInformation.numberFollowing}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=> navigation.navigate('Following')}>
+                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{data.following.length}</Text>
                                 <Text>Seguidos</Text>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                         <Text>{data.userInformation.description}</Text>
                         <View style={{flexDirection:"row"}}>
@@ -66,7 +66,7 @@ export default function Profile() {
                         {/* <Text style={{color:"blue"}}>Paris, France</Text> */}
                     </View>
                     <View style={{flexDirection:"row" , justifyContent:"space-between" , width:"100%" , marginVertical:10}}>
-                        <TouchableOpacity style={{backgroundColor:"#DADADA" , width:"44%" , padding:5 , borderRadius:7}}>
+                        <TouchableOpacity style={{backgroundColor:"#DADADA" , width:"44%" , padding:5 , borderRadius:7}}onPress={()=> navigation.navigate('EditProfile')}>
                             <Text style={{alignSelf:"center" , fontWeight:"bold"}}>Editar perfil</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{backgroundColor:"#DADADA" , width:"44%" , padding:5 , borderRadius:7}}>

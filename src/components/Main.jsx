@@ -6,6 +6,7 @@ import Search from './Search-components/Search'
 import Plus from './Plus-components/Plus'
 import Reels from './Reels-components/Reels'
 import Profile from './Profile-components/Profile'
+import StackProfile from './Profile-components/Stack-Profile'
 import styles from './Styles'
 import { useDatas } from '../hooks/datasContext';
 import Loading from './Loading';
@@ -105,7 +106,7 @@ export default function Main() {
 
                     <Tab.Screen
                     name="Profile"
-                    component={Profile}
+                    component={StackProfile}
                     options={{
                         headerShown: false,
                         tabBarShowLabel: false,
