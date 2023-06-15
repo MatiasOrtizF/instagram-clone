@@ -4,6 +4,7 @@ import Home from './Home'
 import Notifications from './Notifications'
 import Messages from './Messages'
 import { NavigationContainer } from '@react-navigation/native';
+import RootStackScreenMensagge from './RootStackScreenMensagge';
 
 const Stack = createStackNavigator();
 
@@ -44,10 +45,9 @@ export default function MyStack() {
 
                     <Stack.Screen 
                     name="Messages" 
-                    component={Messages} 
+                    component={RootStackScreenMensagge} 
                     options={{
-                            title: "LeoMessi",
-                    //     headerShown: false,
+                        title: "LeoMessi",
                     //     tabBarShowLabel: false,
                     //     tabBarIcon: ({focused}) => (
                     //     <Image

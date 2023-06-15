@@ -1,0 +1,165 @@
+{
+    "messages": [
+        {
+            "id": 1,
+            "imageProfile": "https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/321087640_148732811278507_4258383017871114968_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=ERwAg6EHLhEAX-lmvD5&edm=ACWDqb8BAAAA&ccb=7-5&oh=00_AfDlnXMJImxLdX1a8x7HGqUeKl4GUSuMlEy6gOy4i9bL5g&oe=648EAC42&_nc_sid=640168",
+            "userName": "emi_martinez26",
+            "name": "Emi Martinez",
+            "verified": true,
+            "chat": [
+                {
+                    "timestamp": "2023-06-15T10:30:00",
+                    "senderI": false,
+                    "content": "Hola Messi ¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:30:04",
+                    "senderI": false,
+                    "content": "¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:31:00",
+                    "senderI": true,
+                    "content": "Hola Dibu, estoy bien. ¿Y tú?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:32:00",
+                    "senderI": false,
+                    "content": "También estoy bien, gracias por preguntar.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": false
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": false
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": false
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": false
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": false
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "imageProfile": "https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/334697461_766555128318660_4364996355291650930_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=q77y6VJF12wAX8U49_1&edm=ACWDqb8BAAAA&ccb=7-5&oh=00_AfDZqH045u2NGzsZncdbFKbegzV05NtQGfA3cMOUlNoQvA&oe=648EDEEA&_nc_sid=640168",
+            "userName": "tagliafico3",
+            "name": "Nicolas Tagliafico",
+            "verified": true,
+            "chat": [
+                {
+                    "timestamp": "2023-06-15T10:30:00",
+                    "senderI": false,
+                    "content": "¡Hola Leo! ¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:31:00",
+                    "senderI": true,
+                    "content": "Hola Nico, estoy bien. ¿Y tú?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:32:00",
+                    "senderI": false,
+                    "content": "También estoy bien, gracias por preguntar.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "image": "https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/321091715_1846570395678253_2397686410781786037_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=k-Io_rG1qGIAX8Jc15Q&edm=AHG7ALcBAAAA&ccb=7-5&oh=00_AfAXZf3MIhXchBCLjCazDaWSuzlW2C5Zol4zAy_YZP_bgw&oe=648E3E4B&_nc_sid=344c19",
+            "userName": "rodridepaul",
+            "name": "Rodrigo De Paul",
+            "verified": true,
+            "chat": [
+                {
+                    "timestamp": "2023-06-15T10:30:00",
+                    "senderI": false,
+                    "content": "¡Hola Leo! ¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:31:00",
+                    "senderI": true,
+                    "content": "Hola Rodri, estoy bien. ¿Y tú?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:32:00",
+                    "senderI": false,
+                    "content": "También estoy bien, gracias por preguntar.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                }
+            ]
+        }
+    ]
+}
