@@ -2,15 +2,18 @@ import { createContext , useEffect, useState } from "react";
 import homeData from '../data/home-data.json'
 import { Keyboard } from "react-native";
 import DataJson from '../data/data.json'
+import messageData from '../data/message-data.json'
 
 export const DatasContext = createContext();
 
 export function DataProvider({children}) {
     const [hDataPost , setHDataPost] = useState([]);
     const [dataLoaded , setDataLoaded] = useState(false)
+    const [messages , setMessages] = useState([])
 
     useEffect(() => {
         setHDataPost(homeData.post)
+        setMessages(messageData.messages)
         setTimeout(() => {
             setDataLoaded(true)
         }, 4000)
@@ -96,6 +99,7 @@ export function DataProvider({children}) {
         <DatasContext.Provider value={{
             hDataPost,
             dataLoaded,
+            messages,
             savePost,
             likedPost,
             commentsList,

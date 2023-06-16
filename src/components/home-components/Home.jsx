@@ -4,11 +4,9 @@ import Constants from 'expo-constants'
 import Stories from './Stories'
 import Post from './Post'
 import Labelled from './Labelled';
-import { createStackNavigator } from '@react-navigation/stack';
 import { useDatas } from '../../hooks/datasContext';
 
 export default function Home({navigation}) {
-    const RootStack = createStackNavigator();
 
     const { hDataPost , savePost , likedPost , commentsList , vCommentsList } = useDatas();
 
@@ -21,8 +19,11 @@ export default function Home({navigation}) {
                     <TouchableOpacity onPress={()=> navigation.navigate('Notifications')}>
                         <Image style={styles.icons} source={require('../../../assets/icons/notifications-icon.png')}></Image>
                     </TouchableOpacity>
-                        <TouchableOpacity onPress={()=> navigation.navigate('Messages')}>
-                        <Image style={{marginLeft:20 , width:25,height:25}} source={require('../../../assets/icons/messenger-icon.png')}></Image>
+                    <TouchableOpacity onPress={()=> navigation.navigate('Messages')}>
+                        <View style={{position:"absolute" , zIndex:2 , top:-9 , right:-9 , backgroundColor:"red" , borderRadius:100 , width:18 , height:18 , justifyContent:"center" , alignItems:"center"}}>
+                            <Text style={{color:"white" , fontWeight:600 , fontSize:12}}>2</Text>
+                        </View>
+                        <Image style={{marginLeft:20 , width:22,height:22}} source={require('../../../assets/icons/messenger-icon.png')}></Image>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -51,7 +52,7 @@ export default function Home({navigation}) {
                                     :
                                     null
                                 }
-                                <Image style={{width:400 , height:400}} source={{uri:postImg}}></Image>
+                                <Image style={{width:390 , height:400}} source={{uri:postImg}}></Image>
                             </View>
                         ))}
                     </ScrollView>

@@ -39,7 +39,40 @@
                     "timestamp": "2023-06-15T10:34:00",
                     "sender": "user1",
                     "content": "He estado trabajando en un proyecto interesante.",
-                    "seen": false
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
                 },
                 {
                     "timestamp": "2023-06-15T10:33:00",
@@ -53,6 +86,73 @@
                     "seen": false
                 },
                 {
+                    "timestamp": "2023-06-15T10:30:00",
+                    "senderI": false,
+                    "content": "Hola Messi ¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:30:04",
+                    "senderI": false,
+                    "content": "¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:31:00",
+                    "senderI": true,
+                    "content": "Hola Dibu, estoy bien. ¿Y tú?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:32:00",
+                    "senderI": false,
+                    "content": "También estoy bien, gracias por preguntar.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
                     "timestamp": "2023-06-15T10:33:00",
                     "senderI": true,
                     "content": "¿Qué has estado haciendo?"
@@ -64,6 +164,73 @@
                     "seen": false
                 },
                 {
+                    "timestamp": "2023-06-15T10:30:00",
+                    "senderI": false,
+                    "content": "Hola Messi ¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:30:04",
+                    "senderI": false,
+                    "content": "¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:31:00",
+                    "senderI": true,
+                    "content": "Hola Dibu, estoy bien. ¿Y tú?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:32:00",
+                    "senderI": false,
+                    "content": "También estoy bien, gracias por preguntar.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
                     "timestamp": "2023-06-15T10:33:00",
                     "senderI": true,
                     "content": "¿Qué has estado haciendo?"
@@ -73,6 +240,151 @@
                     "sender": "user1",
                     "content": "He estado trabajando en un proyecto interesante.",
                     "seen": false
+                },
+                {
+                    "timestamp": "2023-06-15T10:30:00",
+                    "senderI": false,
+                    "content": "Hola Messi ¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:30:04",
+                    "senderI": false,
+                    "content": "¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:31:00",
+                    "senderI": true,
+                    "content": "Hola Dibu, estoy bien. ¿Y tú?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:32:00",
+                    "senderI": false,
+                    "content": "También estoy bien, gracias por preguntar.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": false
+                },
+                {
+                    "timestamp": "2023-06-15T10:30:00",
+                    "senderI": false,
+                    "content": "Hola Messi ¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:30:04",
+                    "senderI": false,
+                    "content": "¿Cómo estás?",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:31:00",
+                    "senderI": true,
+                    "content": "Hola Dibu, estoy bien. ¿Y tú?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:32:00",
+                    "senderI": false,
+                    "content": "También estoy bien, gracias por preguntar.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
+                },
+                {
+                    "timestamp": "2023-06-15T10:34:00",
+                    "sender": "user1",
+                    "content": "He estado trabajando en un proyecto interesante.",
+                    "seen": true
                 },
                 {
                     "timestamp": "2023-06-15T10:33:00",
@@ -115,12 +427,6 @@
                     "timestamp": "2023-06-15T10:33:00",
                     "senderI": true,
                     "content": "¿Qué has estado haciendo?"
-                },
-                {
-                    "timestamp": "2023-06-15T10:34:00",
-                    "sender": "user1",
-                    "content": "He estado trabajando en un proyecto interesante.",
-                    "seen": true
                 }
             ]
         },
@@ -156,7 +462,7 @@
                 {
                     "timestamp": "2023-06-15T10:34:00",
                     "sender": "user1",
-                    "content": "He estado trabajando en un proyecto interesante.",
+                    "content": "Tomando",
                     "seen": true
                 }
             ]
