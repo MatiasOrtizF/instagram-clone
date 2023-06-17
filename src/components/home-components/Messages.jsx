@@ -10,7 +10,7 @@ import { useDatas } from '../../hooks/datasContext';
 
 export default function Messages({navigation}) {
 
-    const { messages } = useDatas();
+    const { messages , chatOpen } = useDatas();
 
     return (
         <View>
@@ -23,42 +23,6 @@ export default function Messages({navigation}) {
                     />
                 </View>
 
-                {/* <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{marginBottom:10}}>
-                    <View style={{alignItems:"center" , marginLeft:10}}>
-                        <Image style={{position:"absolute" , top:0 , left:0 , zIndex:3 , width:25 , height: 25}} source={require('../../../assets/icons/add-note-icon.png')}></Image>
-                        <Image style={{width:65,height:65 , borderRadius:100}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
-                        <Text style={{fontSize:12, alignItems:"flex-end"}}>Tu nota</Text>
-                    </View>                    
-                    <View style={{alignItems:"center" , marginLeft:10}}>
-                        <Image style={{width:65,height:65 , borderRadius:100 , borderWidth: 3 , borderColor:"orange"}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
-                        <Text style={{fontSize:12}}>leomessi</Text>
-                    </View>  
-                    <View style={{alignItems:"center" , marginLeft:10}}>
-                        <Image style={{width:65,height:65 , borderRadius:100 , borderWidth: 3 , borderColor:"orange"}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
-                        <Text style={{fontSize:12}}>leomessi</Text>
-                    </View>  
-                    <View style={{alignItems:"center" , marginLeft:10}}>
-                        <Image style={{width:65,height:65 , borderRadius:100}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
-                        <Text style={{fontSize:12}}>leomessi</Text>
-                    </View>  
-                    <View style={{alignItems:"center" , marginLeft:10}}>
-                        <Image style={{width:65,height:65 , borderRadius:100}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
-                        <Text style={{fontSize:12}}>leomessi</Text>
-                    </View>  
-                    <View style={{alignItems:"center" , marginLeft:10}}>
-                        <Image style={{width:65,height:65 , borderRadius:100}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
-                        <Text style={{fontSize:12}}>leomessi</Text>
-                    </View>  
-                    <View style={{alignItems:"center" , marginLeft:10}}>
-                        <Image style={{width:65,height:65 , borderRadius:100}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
-                        <Text style={{fontSize:12}}>leomessi</Text>
-                    </View>  
-                    <View style={{alignItems:"center" , marginLeft:10}}>
-                        <Image style={{width:65,height:65 , borderRadius:100}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
-                        <Text style={{fontSize:12}}>leomessi</Text>
-                    </View>  
-                </ScrollView> */}
-
                 <View style={{paddingHorizontal:10}}>
                     <Text style={{fontWeight:"600"}}>Messages</Text>
                 </View>
@@ -66,7 +30,7 @@ export default function Messages({navigation}) {
                 {messages.map((message) => (
                     <View style={{flexDirection:"row" , justifyContent:"space-between" , marginVertical:5 , width:"100%"}}>
                         <View style={{width:"85%"}}>
-                            <TouchableOpacity style={{flexDirection:"row"}} onPress={()=> {navigation.navigate('Chat' , {chatId: message.id})}}>
+                            <TouchableOpacity style={{flexDirection:"row"}} onPress={()=> {navigation.navigate('Chat' , {chatId: message.id}) , chatOpen(message.id)}}>
                                 <Image style={{width:45,height:45 , borderRadius:100}} source={{uri:message.imageProfile}}></Image>
                                 
                                 <View style={{justifyContent:"center" , marginLeft:10 , width:"75%"}}>

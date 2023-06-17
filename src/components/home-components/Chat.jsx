@@ -5,15 +5,18 @@ import Stories from './Stories'
 import Post from './Post'
 import messageData from '../../data/message-data.json'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDatas } from '../../hooks/datasContext';
 
 export default function Chat({route,navigation:{goBack}}) {
     const {chatId} = route.params;
     const chatNumber = messageData.messages.findIndex(item=>item.id==chatId)
 
+    const { sendMessage , input , setInput } = useDatas();
+
     return (
         <View style={{marginTop: Constants.statusBarHeight , backgroundColor:"white" , flex:1}}>
-            <View style={{flex:0.05 , paddingHorizontal:15 , paddingVertical:10 , backgroundColor:"#9D9D9D"}}>
+            <View style={{paddingHorizontal:15 , paddingVertical:10 , backgroundColor:"#9D9D9D" , height:55}}>
                 <View style={{flexDirection:"row" , alignItems:"center"}}>
                     <TouchableOpacity onPress={()=>goBack()}>
                         <Image source={require('../../../assets/icons/back-icon.png')}/>
@@ -27,12 +30,12 @@ export default function Chat({route,navigation:{goBack}}) {
                     </View>
                 </View>
             </View>
-            <View style={{flex:0.95}}>
+            <View style={{flex:1}}>
                 <ScrollView contentOffset={{y:10000}}>
                     {messageData.messages[chatNumber].chat.map((chat) => (
                         <View style={{paddingHorizontal:15 , paddingVertical:2 }}>
                             {chat.senderI?
-                                <View style={{backgroundColor:"#6192D7" , alignSelf:"flex-end" , padding:7 , borderRadius:10 , margin:5}}>
+                                <View style={{backgroundColor:"#6192D7" , alignSelf:"flex-end" , padding:7 , borderRadius:10}}>
                                     <Text style={{color:"white" , margin:5}}>{chat.content}</Text>
                                 </View>
                                 :
@@ -43,17 +46,25 @@ export default function Chat({route,navigation:{goBack}}) {
                         </View>
                     ))}
                 </ScrollView>
-                <View style={{flexDirection:"row" , justifyContent:"space-between" , backgroundColor:"#DBDBDB" , borderRadius:10 , marginHorizontal:15 , marginVertical:5 , padding:7}}>
-                    <TextInput
-                        placeholder='Message...'
-                    />
-                    <TouchableOpacity style={{backgroundColor:"#6192D7" , alignSelf:"center" , paddingVertical:7 , paddingHorizontal:10 , borderRadius:7}}>
-                        <Text style={{color:"white"}}>
-                            Send
-                        </Text>
-                    </TouchableOpacity>
-                </View>
             </View>
+                <View style={{width:"100%" , height:50}}>
+                    <View style={{backgroundColor:"#DBDBDB" , flexDirection:"row" , justifyContent:"space-between" , borderRadius:10 , padding:7 , marginHorizontal:15}}>
+                        <TextInput
+                            style={{width:"79%"}}
+                            placeholder='Message...'
+                            multiline
+                            onChangeText={setInput}
+                            value={input}
+                        />
+                        <View style={{width:"20%" , justifyContent:"flex-end"}}>
+                            <TouchableOpacity style={{backgroundColor:"#6192D7" , paddingVertical:7 , borderRadius:7}} onPress={()=> sendMessage(chatNumber,input)}>
+                                <Text style={{color:"white" , alignSelf:"center"}}>
+                                    Send
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
         </View>
     );
 }

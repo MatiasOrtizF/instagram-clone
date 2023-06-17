@@ -81,9 +81,9 @@
                 },
                 {
                     "timestamp": "2023-06-15T10:34:00",
-                    "sender": "user1",
+                    "senderI": false,
                     "content": "He estado trabajando en un proyecto interesante.",
-                    "seen": false
+                    "seen": true
                 },
                 {
                     "timestamp": "2023-06-15T10:30:00",
@@ -385,6 +385,11 @@
                     "sender": "user1",
                     "content": "He estado trabajando en un proyecto interesante.",
                     "seen": true
+                },
+                {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": "¿Qué has estado haciendo?"
                 },
                 {
                     "timestamp": "2023-06-15T10:33:00",
@@ -432,7 +437,7 @@
         },
         {
             "id": 3,
-            "image": "https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/321091715_1846570395678253_2397686410781786037_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=k-Io_rG1qGIAX8Jc15Q&edm=AHG7ALcBAAAA&ccb=7-5&oh=00_AfAXZf3MIhXchBCLjCazDaWSuzlW2C5Zol4zAy_YZP_bgw&oe=648E3E4B&_nc_sid=344c19",
+            "imageProfile": "https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/321091715_1846570395678253_2397686410781786037_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=raZCDrKTwBMAX_KSp19&edm=ALlQn9MBAAAA&ccb=7-5&oh=00_AfAlYyzPKPzYlxL69LkXMLL7zS3MSob3YjZk5MvxmRJrAQ&oe=649232CB&_nc_sid=463a08",
             "userName": "rodridepaul",
             "name": "Rodrigo De Paul",
             "verified": true,

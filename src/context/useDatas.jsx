@@ -10,8 +10,11 @@ export function DataProvider({children}) {
     const [hDataPost , setHDataPost] = useState([]);
     const [dataLoaded , setDataLoaded] = useState(false)
     const [messages , setMessages] = useState([])
+    const [messagesCount , setMessagesCount] = useState(0)
+    const [input , setInput] = useState('');
 
     useEffect(() => {
+        seenChat();
         setHDataPost(homeData.post)
         setMessages(messageData.messages)
         setTimeout(() => {
@@ -20,10 +23,21 @@ export function DataProvider({children}) {
     }, []); 
 
     useEffect(() => {
+        seenChat();
         setTimeout(() => {
             setDataLoaded(true)
         }, 4000)
     })
+
+    const seenChat = () => {
+        let cont = 0;
+        messages.forEach(element => {
+            if(element.chat[element.chat.length-1].seen==false) {
+                cont++;
+            }
+        });
+        setMessagesCount(cont)
+    }
 
     const savePost = (id) => {
         const postNumber = hDataPost.findIndex(item=>item.id==id)
@@ -95,11 +109,44 @@ export function DataProvider({children}) {
         const commentNumber = newHDataPost[postNumber][0].comments.findIndex(item=>item.id==id)
         console.log(newHDataPost[postNumber][0].comments[commentNumber].replies)
     }
+
+    const chatOpen = (id) => {
+        const newMessages = [...messages]
+        const chatNumber = messages.findIndex(item=>item.id==id)
+        if(newMessages[chatNumber].chat[newMessages[chatNumber].chat.length-1].seen == false) {
+            newMessages.forEach(element => {
+                if(element.chat[element.chat.length-1].seen==false) {
+                    element.chat[element.chat.length-1].seen=true
+                }
+            });
+        }
+        setMessages(newMessages)
+    }
+
+    const sendMessage = (chatNumber,input) => {
+        if(input.trim()) {
+            const newMessages = [...messages]
+            const newInput = {
+                    "timestamp": "2023-06-15T10:33:00",
+                    "senderI": true,
+                    "content": input
+            }
+            newMessages[chatNumber].chat = [...newMessages[chatNumber].chat , newInput]
+            setMessages(newMessages)
+            setInput('')
+        }
+    }
+
     return (
         <DatasContext.Provider value={{
             hDataPost,
             dataLoaded,
             messages,
+            messagesCount,
+            input,
+            setInput,
+            sendMessage,
+            chatOpen,
             savePost,
             likedPost,
             commentsList,
