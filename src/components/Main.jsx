@@ -1,11 +1,10 @@
 import { Image , Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import MyStack from './home-components/MyStack'
-import Search from './Search-components/Search'
+import StackHome from './home-components/Stack-Home'
+import StackSearch from './Search-components/Stack-Search'
 import Plus from './Plus-components/Plus'
 import Reels from './Reels-components/Reels'
-import Profile from './Profile-components/Profile'
 import StackProfile from './Profile-components/Stack-Profile'
 import styles from './Styles'
 import { useDatas } from '../hooks/datasContext';
@@ -21,8 +20,8 @@ export default function Main() {
             <NavigationContainer>
                 <Tab.Navigator screenOptions={{HeaderShown: false}}>
                     <Tab.Screen
-                    name="MyStack"
-                    component={MyStack}
+                    name="StackHome"
+                    component={StackHome}
                     options={{
                         headerShown: false,
                         tabBarShowLabel: false,
@@ -43,15 +42,15 @@ export default function Main() {
                     </Tab.Screen>
 
                     <Tab.Screen
-                    name="Search"
-                    component={Search}
+                    name="StackSearch"
+                    component={StackSearch}
                     options={{
                         headerShown: false,
                         tabBarShowLabel: false,
                         tabBarIcon: ({focused}) => (
                         <Image
                             source={require('../../assets/icons/search-icon.png')}
-                            style={{width:25 , height:25 , tintColor: focused ? "black" : null}} 
+                            style={{width: focused ? 28: 25 , height: focused ? 28 : 25 }} 
                         >
                         </Image>
                         )

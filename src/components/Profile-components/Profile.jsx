@@ -6,12 +6,17 @@ import Posts from './Posts'
 import Etiqueta from './Etiqueta'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Nose from './Nose'
+import PostDetail from './Post-Detail'
+import { createStackNavigator } from '@react-navigation/stack';
+import StackPostDetails from './StackPostDetails'
+
+const Tab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
 
 export default function Profile({navigation}) {
     openURL = (url) => {
         Linking.openURL(url)
     }
-    const Tab = createMaterialTopTabNavigator();
     
     return (
         <View style={{marginTop: Constants.statusBarHeight}}>
@@ -93,15 +98,17 @@ export default function Profile({navigation}) {
                 <View style={{height:450}}>
                         <Tab.Navigator>
                                 <Tab.Screen
-                                name="Posts"
-                                component={PostProfile}
+                                name="StackPostDetails"
+                                component={StackPostDetails}
                                 options={{
                                     tabBarShowLabel: false,
                                     tabBarIcon: ({focused}) => (
                                         <Image style={{width:30 , height:30}} source={require('../../../assets/icons/publicaciones-icon.png')}></Image>
                                     )
-                                }}
-                                />
+                                }}>
+                                </Tab.Screen>
+                                
+    
                                 <Tab.Screen
                                 name="Etiqueta"
                                 component={Etiqueta}

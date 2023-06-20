@@ -1,8 +1,9 @@
-import { View , Image , ScrollView , TextInput , FlatList} from 'react-native';
+import { View , Image , ScrollView , TextInput , FlatList , TouchableOpacity} from 'react-native';
 import Constants from 'expo-constants'
-import data from '../../data/data.json'
+import data from '../../data/search-data.json'
 
-export default function Search() {
+export default function Search({navigation}) {
+    console.log(data)
     return (
             <View style={{marginTop: Constants.statusBarHeight}}>
                 <ScrollView>
@@ -14,9 +15,11 @@ export default function Search() {
                         />
                     </View>
                     <FlatList
-                        data={data.publicaciones}
-                        renderItem={({item: imagen}) => (
-                            <Image style={{width:"33%" , margin:1 , height:100}} source={{uri:imagen.images}}></Image>
+                        data={data.post}
+                        renderItem={({item: post}) => (
+                            <TouchableOpacity style={{width:"33%" , margin:1}} onPress={()=> navigation.navigate('SearchDetail' , {postId: post.id})}>
+                                <Image style={{height:100}} source={{uri:post.images[0].image1}}></Image>
+                            </TouchableOpacity>
                         )}
                         numColumns={3}
                         scrollEnabled={false}
