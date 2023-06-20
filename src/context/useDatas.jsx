@@ -110,6 +110,13 @@ export function DataProvider({children}) {
         console.log(newHDataPost[postNumber][0].comments[commentNumber].replies)
     }
 
+    const viewReplies = (id,postNumber) => {
+        const newHDataPost = [hDataPost]
+        const commentNumber = newHDataPost[postNumber][0].comments.findIndex(item=>item.id==id)
+        newHDataPost[postNumber][0].comments[commentNumber].repliesState = !newHDataPost[postNumber][0].comments[commentNumber].repliesState
+        setDataLoaded(newHDataPost)
+    }
+
     const chatOpen = (id) => {
         const newMessages = [...messages]
         const chatNumber = messages.findIndex(item=>item.id==id)
@@ -154,7 +161,8 @@ export function DataProvider({children}) {
             numberLabel,
             addComment,
             likedComment,
-            addReply
+            addReply,
+            viewReplies
         }}>
             {children}
         </DatasContext.Provider>

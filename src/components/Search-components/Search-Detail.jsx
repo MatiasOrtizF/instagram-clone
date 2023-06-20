@@ -3,7 +3,7 @@ import styles from '../Styles';
 import Constants from 'expo-constants'
 import data from '../../data/search-data.json'
 
-export default function SearchDetail({route}) {
+export default function SearchDetail({route , navigation}) {
     const {postId} = route.params;
     const postNumber = data.post.findIndex(item=>item.id==postId)
     return (

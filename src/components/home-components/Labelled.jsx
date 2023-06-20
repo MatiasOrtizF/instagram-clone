@@ -15,9 +15,14 @@ export default function Labelled({route}) {
     const postNumber = hDataPost.findIndex(item=>item.id==postId)
 
     return (
-        <View style={{alignItems:"center"}}>
-            <Text style={{fontWeight:800 , fontSize:20}}>In this photo</Text>
-
+        <View style={{backgroundColor:"white", flex:1}}>
+            <Text style={{fontWeight:800 , fontSize:20 , alignSelf:"center" , marginVertical:10}}>In this photo</Text>
+            <View
+                style={{
+                    borderBottomColor: 'gray',
+                    borderBottomWidth: 0.5,
+                }}
+            />
             <View style={{paddingHorizontal:15 , justifyContent:"flex-end" , paddingVertical:5}}>
                 {hDataPost[postNumber].labelled.map((lab) => 
                     <View style={{flexDirection:"row" , alignItems:"center" , width:"100%" , marginVertical:10}}>

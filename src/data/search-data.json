@@ -7,7 +7,7 @@
         "content": "muchas gracias santiago del esteo por un hermoso recibimiento.Gracias Argentina por el cariño recibido en todos estos dias",
         "createdAt": "Hace 9 semanas",
         "likes": 1123758,
-        "like": true,
+        "like": false,
         "saved": true,
         "images": [
             {
@@ -27,7 +27,8 @@
                 "comment": "❤❤❤",
                 "likesNumber": 143,
                 "verified": true,
-                "like":true,
+                "like":false,
+                "repliesState": false,
                 "replies": [
                     {
                         "imageProfile": "",
@@ -35,7 +36,7 @@
                         "comment": "❤❤❤ replica 2",
                         "likesNumber": 143,
                         "verified": true,
-                        "like":true
+                        "like":false
                     },
                     {
                         "imageProfile": "",
@@ -70,6 +71,7 @@
                 "likesNumber": 3129,
                 "verified": true,
                 "like":false,
+                "repliesState": false,
                 "replies": [
                 ]
             },
@@ -81,6 +83,7 @@
                 "likesNumber": 1562,
                 "verified": true,
                 "like":true,
+                "repliesState": false,
                 "replies": [
                     
                 ]
@@ -93,6 +96,7 @@
                 "likesNumber": 1520,
                 "verified": true,
                 "like":false,
+                "repliesState": false,
                 "replies": [
                     {
                         "imageProfile": "",
@@ -112,6 +116,7 @@
                 "likesNumber": 58,
                 "verified": false,
                 "like":false,
+                "repliesState": false,
                 "replies": [
                     
                 ]
