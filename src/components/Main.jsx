@@ -11,7 +11,7 @@ import { useDatas } from '../hooks/datasContext';
 import Loading from './Loading';
 
 export default function Main() {
-    const { dataLoaded } = useDatas();
+    const { dataLoaded , userData } = useDatas();
     const Tab = createBottomTabNavigator();
 
     return (
@@ -111,7 +111,7 @@ export default function Main() {
                         tabBarShowLabel: false,
                         tabBarIcon: ({focused}) => (
                         <Image
-                        source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}
+                        source={{uri:userData.userInformation.imageProfile}}
                         style={{width:30 , height:30 , borderRadius:100 , borderWidth:2 , borderColor: focused ? "black" : null}}
                         >
                         </Image>

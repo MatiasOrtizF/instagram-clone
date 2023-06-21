@@ -13,7 +13,7 @@ export default function userelled() {
                         <View style={{width:"70%" , flexDirection:"row" , alignItems:"center"}}>
                             <View style={{width:"25%"}}>
                                 <Image
-                                    source={{uri:user.image}}
+                                    source={{uri:user.imageProfile}}
                                     style={{width:50 , height:50 , borderRadius:100}}
                                 />
                             </View>

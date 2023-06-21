@@ -77,57 +77,6 @@ export default function Comments({route}) {
                             <Text style={{alignSelf:"center"}}>{comment.likesNumber}</Text>
                         </View>
                     </View>
-                    {comment.replies.length > 0 ?
-                        comment.repliesState?
-                            <>
-                            {comment.replies.map((replie) => 
-                                <View style={{flexDirection:"row" , alignItems:"center" , width:"100%" , marginVertical:10 , justifyContent:"flex-end"}}>
-                                    <View style={{width:"70%" , flexDirection:"row"}}>
-                                        <View style={{width:"20%"}}>
-                                            <Image
-                                                source={{uri:replie.imageProfile}}
-                                                style={{width:40 , height:40 , borderRadius:100}}
-                                            />
-                                        </View>
-                                        <View style={{width:"79%"}}>
-                                            <View style={{flexDirection:"row" , alignItems:"center" , width:"90%"}}>
-                                                <Text numberOfLines={1} ellipsizeMode='tail' style={{fontWeight:"700"}}>{replie.userName}</Text>
-                                                {replie.verified ?
-                                                    <Image style={{width:15 , height:15 , marginLeft:5}} source={require('../../../assets/icons/verificado-icon.png')} ></Image>
-                                                    :
-                                                    null
-                                                }
-                                            </View>
-                                            <Text numberOfLines={13} ellipsizeMode='tail' style={{color:"black" , marginBottom:5}}>{comment.comment}</Text>
-                                            <TouchableOpacity onPress={()=>replyComent(replie.userName)}>
-                                                <Text style={{color:"gray" , fontWeight:500}}>Reply</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                    <View style={{width:"10%" , alignSelf:"flex-start"}}>
-                                            <TouchableOpacity onPress={()=> likedComment(replie.id , postNumber)}>
-                                                {replie.like ?
-                                                    <Image style={{width:15 , height:15 , alignSelf:"center"}} source={require('../../../assets/icons/like-actived-icon.png')}></Image>
-                                                :
-                                                    <Image style={{width:15 , height:15 , alignSelf:"center"}} source={require('../../../assets/icons/like-icon.png')}></Image>
-                                                }
-                                            </TouchableOpacity>
-                                        <Text style={{alignSelf:"center"}}>{replie.likesNumber}</Text>
-                                    </View>
-                                </View>
-                            )}
-                            <TouchableOpacity style={{flexDirection:"row" , marginLeft:"34%" , marginTop:5}} onPress={()=> viewReplies(comment.id, postNumber)}>
-                                <Text style={{color:"gray" , fontWeight:500}}>Hide replies</Text>
-                            </TouchableOpacity>
-                            </>
-                            :
-                            <TouchableOpacity style={{alignItems:"center"}} onPress={()=>viewReplies(comment.id,postNumber)}>
-                                <Text style={{color:"gray" , fontWeight:500}}>View {comment.replies.length} more replies</Text>
-                            </TouchableOpacity>
-                        
-                        :
-                        null
-                    }
                 </View>
             )}
             </ScrollView>

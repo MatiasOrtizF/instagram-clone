@@ -3,18 +3,22 @@ import homeData from '../data/home-data.json'
 import { Keyboard } from "react-native";
 import DataJson from '../data/data.json'
 import messageData from '../data/message-data.json'
+import DataUser from '../data/data.json'
 
 export const DatasContext = createContext();
 
 export function DataProvider({children}) {
     const [hDataPost , setHDataPost] = useState([]);
+    const [userData , setUserData] = useState([])
     const [dataLoaded , setDataLoaded] = useState(false)
     const [messages , setMessages] = useState([])
     const [messagesCount , setMessagesCount] = useState(0)
     const [input , setInput] = useState('');
 
+
     useEffect(() => {
         seenChat();
+        setUserData(DataUser)
         setHDataPost(homeData.post)
         setMessages(messageData.messages)
         setTimeout(() => {
@@ -162,7 +166,8 @@ export function DataProvider({children}) {
             addComment,
             likedComment,
             addReply,
-            viewReplies
+            viewReplies,
+            userData
         }}>
             {children}
         </DatasContext.Provider>

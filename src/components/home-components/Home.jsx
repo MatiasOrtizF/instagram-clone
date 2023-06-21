@@ -1,4 +1,4 @@
-import { Text, View , Image , ScrollView , TextInput , TouchableOpacity} from 'react-native';
+import { Text, View , Image , ScrollView , TextInput , TouchableOpacity, ImageBackground , StyleSheet , Dimensions } from 'react-native';
 import styles from '../Styles';
 import Constants from 'expo-constants'
 import Stories from './Stories'
@@ -40,13 +40,12 @@ export default function Home({navigation}) {
                 {hDataPost.map((post) => (
                 <View>
                     <View style={{flexDirection:"row" , alignItems:"center" , margin:10}}>
-                        <Image style={{width:30,height:30 , borderRadius:100}} source={{uri:"https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/346442308_273390681703252_1576124466292856058_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=1-ov-nRAL00AX-VD-ZO&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfBBEOvv2v9G4H9HpghENlr4n8YXYFYKL6MmuXtxA1sjXw&oe=647DE067&_nc_sid=a1ad6c"}}></Image>
+                        <Image style={{width:30,height:30 , borderRadius:100}} source={{uri:"https://fotos.perfil.com/2022/12/20/trim/720/410/di-maria-1476790.jpg"}}></Image>
                         <Text style={{marginLeft:10 , fontWeight:700}}>{post.userName}</Text>
                         <Image style={{width:15 , height:15 , marginLeft:5}} source={require('../../../assets/icons/verificado-icon.png')} ></Image>
                         {/* agregar el lugar */}
                     </View>
-                    <ScrollView horizontal style={{marginBottom:10}}>
-                        {Object.values(post.images[0]).map((postImg) => (
+                    <View horizontal style={{marginBottom:10}}>
                             <View>
                                 {post.labelled.length > 0 ?
                                     <TouchableOpacity style={{position:"absolute" , zIndex:3 , bottom:15 , left:15}} onPress={()=> navigation.navigate('Labelled', {postId: post.id})}>
@@ -55,10 +54,9 @@ export default function Home({navigation}) {
                                     :
                                     null
                                 }
-                                <Image style={{width:390 , height:400}} source={{uri:postImg}}></Image>
+                                <Image style={{width:"100%" , aspectRatio:1}}  resizeMode="cover" source={{uri:post.image}}></Image>
                             </View>
-                        ))}
-                    </ScrollView>
+                    </View>
                     <View style={{flexDirection:"row", flex: 1, padding:10}}>
                         <View style={{flexDirection:"row" , width:"33%"}}>
                             <TouchableOpacity onPress={()=>likedPost(post.id)}>
@@ -77,14 +75,6 @@ export default function Home({navigation}) {
                             {/* {post.images.map((img) => (
                                 console.log(img)
                             ))} */}
-                            {Object.values(post.images[0]).length > 1 ?
-                            Object.values(post.images[0]).map(() => (
-                                // <Image style={{width:9 , height:9}} source={require("../../../assets/icons/point-actived-icon.png")}></Image>
-                                <Image style={{width:14 , height:14}} source={require("../../../assets/icons/point-icon.png")}></Image>
-                            ))
-                            :
-                            null
-                        }
                             {/* <Image style={{width:9 , height:9}} source={require("../../../assets/icons/point-actived-icon.png")}></Image> */}
                         </View>
                         <View style={{width:"33%", alignItems:"flex-end"}}>
@@ -141,3 +131,4 @@ export default function Home({navigation}) {
         </View>
     );
 }
+

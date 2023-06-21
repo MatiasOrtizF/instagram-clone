@@ -9,11 +9,14 @@ import Nose from './Nose'
 import PostDetail from './Post-Detail'
 import { createStackNavigator } from '@react-navigation/stack';
 import StackPostDetails from './StackPostDetails'
+import { useDatas } from '../../hooks/datasContext';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 export default function Profile({navigation}) {
+    const { userData } = useDatas();
+
     openURL = (url) => {
         Linking.openURL(url)
     }
@@ -45,7 +48,7 @@ export default function Profile({navigation}) {
                     <View style={{paddingVertical:10}}>
                         <View style={{flexDirection:"row" , alignItems:"center" , justifyContent:"space-between"}}>
                             <View>
-                                <Image style={{width:85,height:85 , borderRadius:100}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
+                                <Image style={{width:85,height:85 , borderRadius:100}} source={{uri:userData.imageProfile}}></Image>
                                 <Text style={{fontWeight:600}}>{data.userInformation.username}</Text>
                             </View>
                             <View>
