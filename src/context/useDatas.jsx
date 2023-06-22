@@ -76,34 +76,34 @@ export function DataProvider({children}) {
     }
 
     const addComment = (input,postNumber) => {
-        const newHDataPost = [hDataPost]
+        const newHDataPost = [...hDataPost]
         if(input.trim()) {
             const newComment = {
-                "id": 105,
-                "imageProfile": DataJson.userInformation.image,
-                "userName": DataJson.userInformation.username,
+                "id": 105, //el id tiene que ser unico
+                "imageProfile": userData.userInformation.imageProfile,
+                "userName": userData.userInformation.userName,
                 "comment": input,
                 "likesNumber": 0,
-                "verified": DataJson.userInformation.verified,
+                "verified": userData.userInformation.verified,
                 "like":false,
                 "replies": [
                 ]
             }
-            newHDataPost[postNumber][0].comments = [...newHDataPost[postNumber][0].comments , newComment]
+            newHDataPost[postNumber].comments = [...newHDataPost[postNumber].comments , newComment]
             setDataLoaded(newHDataPost)
             Keyboard.dismiss();
         }
     }
 
-    const likedComment = (id, postNumber) => {
-        const newHDataPost = [hDataPost]
-        const commentNumber = newHDataPost[postNumber][0].comments.findIndex(item=>item.id==id)
-        if(newHDataPost[postNumber][0].comments[commentNumber].like) {
-            newHDataPost[postNumber][0].comments[commentNumber].like = false
-            newHDataPost[postNumber][0].comments[commentNumber].likesNumber -=1 
+    const likedComment = (id,postNumber) => {
+        const newHDataPost = [...hDataPost]
+        const commentNumber = newHDataPost[postNumber].comments.findIndex(item=>item.id==id)
+        if(newHDataPost[postNumber].comments[commentNumber].like) {
+            newHDataPost[postNumber].comments[commentNumber].like = false
+            newHDataPost[postNumber].comments[commentNumber].likesNumber -=1 
         } else {
-            newHDataPost[postNumber][0].comments[commentNumber].like = true
-            newHDataPost[postNumber][0].comments[commentNumber].likesNumber +=1 
+            newHDataPost[postNumber].comments[commentNumber].like = true
+            newHDataPost[postNumber].comments[commentNumber].likesNumber +=1 
         }
         setDataLoaded(newHDataPost)
     }

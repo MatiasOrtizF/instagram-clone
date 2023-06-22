@@ -32,7 +32,7 @@ export default function Home({navigation}) {
             </View>
             <ScrollView>
 
-                <Stories/>
+                
 
                 <View style={{ backgroundColor: 'gray', height: 0.5 }} />
 
@@ -40,7 +40,7 @@ export default function Home({navigation}) {
                 {hDataPost.map((post) => (
                 <View>
                     <View style={{flexDirection:"row" , alignItems:"center" , margin:10}}>
-                        <Image style={{width:30,height:30 , borderRadius:100}} source={{uri:"https://fotos.perfil.com/2022/12/20/trim/720/410/di-maria-1476790.jpg"}}></Image>
+                        <Image style={{width:30,height:30 , borderRadius:100}} source={{uri:post.imageProfile}}></Image>
                         <Text style={{marginLeft:10 , fontWeight:700}}>{post.userName}</Text>
                         <Image style={{width:15 , height:15 , marginLeft:5}} source={require('../../../assets/icons/verificado-icon.png')} ></Image>
                         {/* agregar el lugar */}
@@ -61,15 +61,14 @@ export default function Home({navigation}) {
                         <View style={{flexDirection:"row" , width:"33%"}}>
                             <TouchableOpacity onPress={()=>likedPost(post.id)}>
                                 {post.like ?
-                                    <Image style={styles.icons} source={require('../../../assets/icons/like-actived-icon.png')}></Image>
+                                    <Image style={{width:27 , height:27}} source={require('../../../assets/icons/like-actived-icon.png')}></Image>
                                     :
-                                    <Image style={styles.icons} source={require('../../../assets/icons/like-icon.png')}></Image>
+                                    <Image style={{width:27 , height:27}} source={require('../../../assets/icons/like-icon.png')}></Image>
                                 }
                             </TouchableOpacity>
                             <TouchableOpacity onPress={()=> commentsList(post.id)}>
                                 <Image style={{width:25,height:25 , marginLeft:20}} source={require('../../../assets/icons/comentary-icon.png')}></Image>
                             </TouchableOpacity>
-                            <Image style={{width:25,height:25 , marginLeft:20}} source={require('../../../assets/icons/compartir-icon.png')}></Image>
                         </View>
                         <View style={{alignItems:"center" , width:"33%" , flexDirection:"row" , justifyContent:"center"}}>
                             {/* {post.images.map((img) => (

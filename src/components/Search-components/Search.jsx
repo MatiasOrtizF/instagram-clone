@@ -18,7 +18,7 @@ export default function Search({navigation}) {
                         data={data.post}
                         renderItem={({item: post}) => (
                             <TouchableOpacity style={{width:"33%" , margin:1}} onPress={()=> navigation.navigate('SearchDetail' , {postId: post.id})}>
-                                <Image style={{height:100}} source={{uri:post.images[0].image1}}></Image>
+                                <Image style={{height:100}} source={{uri:post.image}}></Image>
                             </TouchableOpacity>
                         )}
                         numColumns={3}

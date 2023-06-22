@@ -8,7 +8,7 @@ import { useDatas } from '../../hooks/datasContext';
 
 export default function Labelled({route}) {
 
-    const { hDataPost } = useDatas();
+    const { hDataPost , userData } = useDatas();
 
     const {postId} = route.params;
     const [listLabeles , setListLabeles] = useState({});
@@ -46,18 +46,21 @@ export default function Labelled({route}) {
                             </View>
                         </View>
                         <View style={{width:"30%" , justifyContent:"flex-end"}}>
-                            {lab.follow ?
-                                <TouchableOpacity style={{backgroundColor:"#DBDBDB" , padding:10 , borderRadius:7}}>
-                                    <Text style={{fontWeight:700, color:"black" , alignSelf:"center"}}>
-                                        Following
-                                    </Text>
-                                </TouchableOpacity>
+                            {lab.userName != userData.userInformation.userName ? 
+                                lab.follow ?
+                                    <TouchableOpacity style={{backgroundColor:"#DBDBDB" , padding:10 , borderRadius:7}}>
+                                        <Text style={{fontWeight:700, color:"black" , alignSelf:"center"}}>
+                                            Following
+                                        </Text>
+                                    </TouchableOpacity>
+                                    :
+                                    <TouchableOpacity style={{backgroundColor:"#6192D7" , padding:10 , borderRadius:7}}>
+                                        <Text style={{fontWeight:700 , color:"white" , alignSelf:"center"}}>
+                                            Follow
+                                        </Text>
+                                    </TouchableOpacity>
                                 :
-                                <TouchableOpacity style={{backgroundColor:"#6192D7" , padding:10 , borderRadius:7}}>
-                                    <Text style={{fontWeight:700 , color:"white" , alignSelf:"center"}}>
-                                        Follow
-                                    </Text>
-                                </TouchableOpacity>
+                                null
                             }
                         </View>
                     </View>

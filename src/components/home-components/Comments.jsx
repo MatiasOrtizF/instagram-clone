@@ -11,16 +11,13 @@ export default function Comments({route}) {
     Comments.navigationOptions = {
         tabBarVisible:false
     }
-    const { hDataPost , addComment , likedComment , addReply , viewReplies} = useDatas();
+    const { hDataPost , addComment , likedComment , userData} = useDatas();
 
-    const [displayReplies , setDisplayReplies] = useState([])
 
     const {postId} = route.params;
-    const [listLabeles , setListLabeles] = useState({});
     const postNumber = hDataPost.findIndex(item=>item.id==postId)
 
     const [input, setInput] = useState('')
-    const [moreReplies , setMoreReplies] = useState(false)
 
 
     const [inputValue , setInputValue] = useState('')
@@ -32,10 +29,6 @@ export default function Comments({route}) {
     const handleInputValue = () => {
         setInputValue('')
     }
-
-    // useEffect(() => {
-    //     console.log(hDataPost[postNumber].labelled)
-    // })
 
     return (
         <View style={{paddingVertical:5 , flex:1}}>
@@ -96,7 +89,7 @@ export default function Comments({route}) {
                 <View style={{ backgroundColor: 'black', height: 0.9 , marginBottom:5}} />
                 <View style={{width:"100%" , flexDirection:"row" , alignItems:"center" , justifyContent:"space-between" , marginVertical:7 , paddingHorizontal:15}}>
                     <Image
-                            source={{uri:DataJson.userInformation.image}}
+                            source={{uri:userData.userInformation.imageProfile}}
                             style={{width:40 , height:40 , borderRadius:100 , alignSelf:"flex-end"}}
                     />
                     {inputValue.length >0 ?
@@ -109,7 +102,7 @@ export default function Comments({route}) {
                                 onChangeText={setInput}
                                 defaultValue={"@" + inputValue + " "}
                             />
-                            <TouchableOpacity style={{width:"10%"}} onPress={()=> addReply(input, postNumber)}>
+                            <TouchableOpacity style={{width:"10%"}} onPress={()=> addComment(input, postNumber)}>
                                 <Text style={{color:"#6192D7" , fontSize:17 , fontWeight:500}}>Post</Text>
                             </TouchableOpacity>
                         </>
