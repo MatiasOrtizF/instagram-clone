@@ -40,7 +40,7 @@ export default function Home({navigation}) {
                 {hDataPost.map((post) => (
                 <View>
                     <View style={{flexDirection:"row" , alignItems:"center" , margin:10}}>
-                        <Image style={{width:30,height:30 , borderRadius:100}} source={{uri:post.imageProfile}}></Image>
+                        <Image style={{width:35 , height:35 , borderRadius:100}} source={{uri:post.imageProfile}}></Image>
                         <Text style={{marginLeft:10 , fontWeight:700}}>{post.userName}</Text>
                         <Image style={{width:15 , height:15 , marginLeft:5}} source={require('../../../assets/icons/verificado-icon.png')} ></Image>
                         {/* agregar el lugar */}

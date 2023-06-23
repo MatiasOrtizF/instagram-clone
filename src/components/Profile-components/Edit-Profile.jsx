@@ -2,14 +2,43 @@ import { Text, View , Image , ScrollView , TextInput} from 'react-native';
 import Constants from 'expo-constants'
 import data from '../../data/data.json'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as ImagePicker from 'expo-image-picker';
+import { useState } from 'react';
+import { useDatas } from '../../hooks/datasContext';
 
 export default function EditProfile() {
+
+    const { editDataProfile , userData } = useDatas();
+
+    const [image, setImage] = useState(userData[0].imageProfile);
+    const [nameInput , setNameInput] = useState(userData[0].name)
+    const [userNameInput , setUserNameInput] = useState(userData[0].userName)
+    const [bioInput , setBioput] = useState(userData[0].description)
+    const [linkInput , setLinkInput] = useState(userData[0].link)
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+    
+        console.log(result);
+    
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+        }
+    };
+
+
     return (
         <ScrollView>
             <View style={{marginTop: Constants.statusBarHeight}}>
                     <View style={{alignItems:"center" , margin:5}}>
-                        <Image style={{width:75,height:75 , borderRadius:100 , marginBottom:5}} source={{uri:'https://instagram.ffdo2-1.fna.fbcdn.net/v/t51.2885-19/43818140_2116018831763532_3803033961098117120_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ffdo2-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8rrGORFcBx0AX-ALIFn&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfAhjcSMhgczSQcHN9pYlF9MOn_7sAmGky0vH_K_Wo0iSg&oe=647CC632&_nc_sid=a1ad6c'}}></Image>
-                        <TouchableOpacity>
+                        <Image style={{width:75,height:75 , borderRadius:100 , marginBottom:5}} source={{uri:image}}></Image>
+                        <TouchableOpacity onPress={pickImage}>
                             <Text style={{fontSize:15 , color:"blue"}}>Edit picture or avatar</Text>
                         </TouchableOpacity>
                     </View>
@@ -17,31 +46,35 @@ export default function EditProfile() {
                         <Text style={{fontSize:15 , fontWeight:500}}>Name</Text>
                         <TextInput 
                             placeholder='Add Name'
-                            defaultValue={data.userInformation.name}
+                            defaultValue={nameInput}
+                            onChangeText={setNameInput}
                         />
                         <View style={{ backgroundColor: 'black', height: 1 , marginBottom:7 }} />
 
                         <Text style={{fontSize:15 , fontWeight:500}}>UserName</Text>
                         <TextInput 
                             placeholder='Add User Name'
-                            defaultValue={data.userInformation.username}
+                            defaultValue={userNameInput}
+                            onChangeText={setUserNameInput}
                         />
                         <View style={{ backgroundColor: 'black', height: 1 , marginBottom:7 }} />
 
                         <Text style={{fontSize:15 , fontWeight:500}}>Bio</Text>
                         <TextInput 
                             placeholder='Add Bio'
-                            defaultValue={data.userInformation.description}
+                            defaultValue={bioInput}
+                            onChangeText={setBioput}
                         />
                         <View style={{ backgroundColor: 'black', height: 1 , marginBottom:7 }} />
 
                         <Text style={{fontSize:15 , fontWeight:500}}>Link</Text>
                         <TextInput 
                             placeholder='Add Link'
-                            defaultValue={data.userInformation.link}
+                            defaultValue={linkInput}
+                            onChangeText={setLinkInput}
                         />
                         <View style={{ backgroundColor: 'black', height: 1 , marginBottom:7 }} />
-                        <TouchableOpacity style={{backgroundColor:"blue" , alignSelf:"flex-end" , paddingVertical:7 , paddingHorizontal:15 , borderRadius:7 , marginTop:10}}>
+                        <TouchableOpacity onPress={()=> editDataProfile(image,userNameInput,nameInput,bioInput,linkInput)} style={{backgroundColor:"blue" , alignSelf:"flex-end" , paddingVertical:7 , paddingHorizontal:15 , borderRadius:7 , marginTop:10}}>
                             <Text style={{color:"#fff" , fontSize:15}}>Save</Text>
                         </TouchableOpacity>
                     </View>

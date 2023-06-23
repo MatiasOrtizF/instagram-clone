@@ -14,11 +14,17 @@ export function DataProvider({children}) {
     const [messages , setMessages] = useState([])
     const [messagesCount , setMessagesCount] = useState(0)
     const [input , setInput] = useState('');
+    const [followingData , setFollowingData] = useState([])
+    const [followersData , setFollowersData] = useState([])
+    const [post , setPost] = useState([])
 
 
     useEffect(() => {
         seenChat();
-        setUserData(DataUser)
+        setUserData(DataUser.userInformation)
+        setPost(DataUser.post)
+        setFollowingData(DataUser.following)
+        setFollowersData(DataUser.followers)
         setHDataPost(homeData.post)
         setMessages(messageData.messages)
         setTimeout(() => {
@@ -148,6 +154,16 @@ export function DataProvider({children}) {
         }
     }
 
+    const editDataProfile = (image,userNameInput,nameInput,bioInput,linkInput) => {
+        const newUserData = [...userData]
+        newUserData[0].imageProfile = image
+        newUserData[0].userName = userNameInput
+        newUserData[0].name = nameInput
+        newUserData[0].description = bioInput
+        newUserData[0].link = linkInput
+        setUserData(newUserData)
+    }
+
     return (
         <DatasContext.Provider value={{
             hDataPost,
@@ -167,7 +183,11 @@ export function DataProvider({children}) {
             likedComment,
             addReply,
             viewReplies,
-            userData
+            editDataProfile,
+            userData,
+            post,
+            followingData,
+            followersData
         }}>
             {children}
         </DatasContext.Provider>

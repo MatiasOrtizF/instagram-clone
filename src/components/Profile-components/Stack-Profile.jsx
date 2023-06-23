@@ -4,6 +4,7 @@ import Profile from './Profile';
 import Followers from './Followers';
 import Following from './Following';
 import EditProfile from './Edit-Profile'
+import PostDetail from './Post-Detail'
 
 const Stack = createStackNavigator();
 
@@ -75,6 +76,25 @@ export default function StackProfile() {
                     //     )
                     }}
                     />
+
+                        <Stack.Group>
+                            <Stack.Screen 
+                                name="PostDetail" 
+                                component={PostDetail}
+                                options={{
+                                        title: "Posts",
+                                    //     headerShown: false,
+                                    //     tabBarShowLabel: false,
+                                    //     tabBarIcon: ({focused}) => (
+                                    //     <Image
+                                    //         source={require('../../../assets/icons/messenger-icon.png')}
+                                    //         style={styles.icons} 
+                                    //     >
+                                    //     </Image>
+                                    //     )
+                                    }}
+                            />
+                </Stack.Group>
             </Stack.Navigator>
     )
 }

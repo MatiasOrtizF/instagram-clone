@@ -1,7 +1,6 @@
 import { Text, View , Image , TouchableOpacity, ScrollView, FlatList , Linking } from 'react-native';
 import Constants from 'expo-constants'
 import data from '../../data/data.json'
-import PostProfile from './Post-Profile';
 import Posts from './Posts'
 import Etiqueta from './Etiqueta'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -14,29 +13,48 @@ import { useDatas } from '../../hooks/datasContext';
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
-export default function Profile({navigation}) {
+function PostProfile({navigation}) {
     const { userData } = useDatas();
+    return (
+                    <FlatList
+                        data={userData[0].post}
+                        keyExtractor={item=>item.id}
+                        renderItem={({item: post}) => (
+                                <TouchableOpacity style={{width:"33%" , margin:1}} onPress={()=> navigation.navigate('PostDetail')} >
+                                    <Image style={{height:100}} source={{uri:post.image}}/>
+                                </TouchableOpacity>
+                        )}
+                        numColumns={3}
+                        scrollEnabled={false}
+                    />  
+    );
+}
+
+export default function Profile({navigation}) {
+    const { userData , post , followingData , followersData } = useDatas();
+    const lengthPost = (userData[0].post.length)
+    const ceilLengthPost = Math.ceil(lengthPost/3)
 
     openURL = (url) => {
         Linking.openURL(url)
     }
     
     return (
-        <View style={{marginTop: Constants.statusBarHeight}}>
+        <View style={{marginTop: Constants.statusBarHeight , backgroundColor:"white"}}>
             <ScrollView>
                 <View>
                     
                 <View style={{padding: 10}}>
                     <View style={{flexDirection:"row" , justifyContent:"space-between"}}>
                         <View style={{flexDirection:"row"}}>
-                            <Text style={{fontWeight:"bold" , fontSize:20}}>{data.userInformation.username}</Text>
+                            <Text style={{fontWeight:"bold" , fontSize:20}}>{userData[0].userName}</Text>
                             <Image style={{width:14 , height:14 , marginLeft:5 , alignSelf:"center"}} source={require('../../../assets/icons/verificado-icon.png')} ></Image>
-                            <TouchableOpacity style={{alignSelf:"center"}}> 
+                            {/* <TouchableOpacity style={{alignSelf:"center"}}> 
                                 <Image style={{width:20 , height:20 , marginLeft:5}} source={require('../../../assets/icons/arrow-down-icon.png')} ></Image>
-                            </TouchableOpacity>                    
+                            </TouchableOpacity>                     */}
                         </View>
                         <View style={{flexDirection:"row"}}>
-                            <Image style={{width:20, height:20 , alignSelf:"center" , marginRight:20}} source={require('../../../assets/icons/add-profile-icon.png')}></Image>
+                            {/* <Image style={{width:20, height:20 , alignSelf:"center" , marginRight:20}} source={require('../../../assets/icons/add-profile-icon.png')}></Image> */}
                             <Image source={require('../../../assets/icons/menu-burger-icon.png')}></Image>
                         </View>
                     </View>
@@ -45,29 +63,29 @@ export default function Profile({navigation}) {
 
                 <View style={{paddingHorizontal: 10}}>
 
-                    <View style={{paddingVertical:10}}>
+                    <View>
                         <View style={{flexDirection:"row" , alignItems:"center" , justifyContent:"space-between"}}>
                             <View>
-                                <Image style={{width:85,height:85 , borderRadius:100}} source={{uri:userData.imageProfile}}></Image>
-                                <Text style={{fontWeight:600}}>{data.userInformation.username}</Text>
+                                <Image style={{width:85,height:85 , borderRadius:100}} source={{uri:userData[0].imageProfile}}></Image>
+                                <Text style={{fontWeight:600}}>{userData[0].name}</Text>
                             </View>
                             <View>
-                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{data.userInformation.post.length}</Text>
-                                <Text>Publicaciones</Text>
+                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{userData[0].post.length}</Text>
+                                <Text>Posts</Text>
                             </View>
                             <TouchableOpacity onPress={()=> navigation.navigate('Followers')}>
-                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{data.userInformation.numberFollowers}</Text>
-                                <Text>Seguidores</Text>
+                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{followersData.length}</Text>
+                                <Text>Followers</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={()=> navigation.navigate('Following')}>
-                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{data.following.length}</Text>
-                                <Text>Seguidos</Text>
+                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{followingData.length}</Text>
+                                <Text>Following</Text>
                             </TouchableOpacity>
                         </View>
-                        <Text>{data.userInformation.description}</Text>
+                        <Text>{userData[0].description}</Text>
                         <View style={{flexDirection:"row"}}>
                             <Image style={{width:17 , height: 17 , marginRight:5}} source={require('../../../assets/icons/link-icon.png')}></Image>
-                            <TouchableOpacity onPress={()=> openURL(data.userInformation.link)}>
+                            <TouchableOpacity onPress={()=> openURL(userData[0].link)}>
                                 <Text style={{color:"blue"}}>themessistore.com</Text>   
                             </TouchableOpacity> 
                         </View>
@@ -75,10 +93,10 @@ export default function Profile({navigation}) {
                     </View>
                     <View style={{flexDirection:"row" , justifyContent:"space-between" , width:"100%" , marginVertical:10}}>
                         <TouchableOpacity style={{backgroundColor:"#DADADA" , width:"44%" , padding:5 , borderRadius:7}}onPress={()=> navigation.navigate('EditProfile')}>
-                            <Text style={{alignSelf:"center" , fontWeight:"bold"}}>Editar perfil</Text>
+                            <Text style={{alignSelf:"center" , fontWeight:"bold"}}>Edit profile</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{backgroundColor:"#DADADA" , width:"44%" , padding:5 , borderRadius:7}}>
-                            <Text style={{alignSelf:"center" , fontWeight:"bold"}}>Compartir perfil</Text>
+                            <Text style={{alignSelf:"center" , fontWeight:"bold"}}>Share profile</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{backgroundColor:"#DADADA" , width:"9%" , padding:5 , borderRadius:7}}>
                             <Image style={{width:20 , height:20 , alignSelf:"center"}} source={require('../../../assets/icons/add-icon.png')}></Image>
@@ -98,11 +116,11 @@ export default function Profile({navigation}) {
                         <View style={{ backgroundColor: 'gray', height: 0.5 , width:"50%"}} />
                     </View> */}
                 </View>
-                <View style={{height:450}}>
-                        <Tab.Navigator>
+                <View>
+                        <Tab.Navigator style={{height:(102*ceilLengthPost)+50}}>
                                 <Tab.Screen
-                                name="StackPostDetails"
-                                component={StackPostDetails}
+                                name="PostProfile"
+                                component={PostProfile}
                                 options={{
                                     tabBarShowLabel: false,
                                     tabBarIcon: ({focused}) => (
@@ -123,7 +141,7 @@ export default function Profile({navigation}) {
                                 }}
                                 />
                         </Tab.Navigator>
-                    </View>
+                </View>
             </ScrollView>
         </View>
     );

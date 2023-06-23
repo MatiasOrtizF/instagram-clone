@@ -25,11 +25,8 @@ export default function StackPostDetails() {
                         //     )
                         }}
                     />
-
-                    <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                        <Stack.Screen name="PostDetail" component={PostDetail} />
-                        <Stack.Screen name="Etiqueta" component={Etiqueta} />
-                    </Stack.Group>
+                    <Stack.Screen name="PostDetail" component={PostDetail} />
+                    <Stack.Screen name="Etiqueta" component={Etiqueta} />
 
             </Stack.Navigator>
     )

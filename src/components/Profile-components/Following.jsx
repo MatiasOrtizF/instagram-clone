@@ -3,11 +3,11 @@ import { useDatas } from '../../hooks/datasContext';
 import data from '../../data/data.json'
 
 export default function userelled() {
+    const { followingData } = useDatas();    
     return (
-        <View style={{alignItems:"center"}}>
-            <ScrollView>
+        <ScrollView>
             <View style={{paddingHorizontal:15 , justifyContent:"flex-end" , paddingVertical:5}}>
-            {data.following.map((user) => (
+            {followingData.map((user) => (
 
                     <View style={{flexDirection:"row" , alignItems:"center" , width:"100%" , marginVertical:10}}>
                         <View style={{width:"70%" , flexDirection:"row" , alignItems:"center"}}>
@@ -49,8 +49,7 @@ export default function userelled() {
             ))}
 
             </View>
-            </ScrollView>
-        </View>
+        </ScrollView>
 
 );
 }
