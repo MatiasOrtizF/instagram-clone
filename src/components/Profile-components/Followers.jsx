@@ -10,12 +10,12 @@ import {useDatas} from '../../hooks/datasContext'
 
 export default function Followers() {
 
-    const { followersData } = useDatas();    
+    const { usersData , unFollowUser , followUser} = useDatas();    
     return (
         <ScrollView>
             <View style={{paddingHorizontal:15 , justifyContent:"flex-end" , paddingVertical:5}}>
-                {followersData.map((user) => (
-                    
+                {usersData.map((user) => (
+                    user.follower?
                     <View style={{flexDirection:"row" , alignItems:"center" , width:"100%" , marginVertical:10}}>
                         <View style={{width:"70%" , flexDirection:"row" , alignItems:"center"}}>
                             <View style={{width:"25%"}}>
@@ -37,14 +37,14 @@ export default function Followers() {
                             </View>
                         </View>
                         <View style={{width:"30%" , justifyContent:"flex-end"}}>
-                            {user.follow ?
-                                <TouchableOpacity style={{backgroundColor:"#DBDBDB" , padding:10 , borderRadius:7}}>
+                            {user.following ?
+                                <TouchableOpacity onPress={()=> unFollowUser(user.id)} style={{backgroundColor:"#DBDBDB" , padding:10 , borderRadius:7}}>
                                     <Text style={{fontWeight:700, color:"black" , alignSelf:"center"}}>
                                         Following
                                     </Text>
                                 </TouchableOpacity>
                                 :
-                                <TouchableOpacity style={{backgroundColor:"#6192D7" , padding:10 , borderRadius:7}}>
+                                <TouchableOpacity onPress={()=> followUser(user.id)} style={{backgroundColor:"#6192D7" , padding:10 , borderRadius:7}}>
                                     <Text style={{fontWeight:700 , color:"white" , alignSelf:"center"}}>
                                         Follow
                                     </Text>
@@ -52,7 +52,8 @@ export default function Followers() {
                             }
                         </View>
                     </View>
-
+                    :
+                    null
                 ))}
             </View>
         </ScrollView>

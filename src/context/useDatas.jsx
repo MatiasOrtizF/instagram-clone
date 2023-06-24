@@ -1,6 +1,6 @@
 import { createContext , useEffect, useState } from "react";
 import homeData from '../data/home-data.json'
-import { Keyboard } from "react-native";
+import { Keyboard , Alert } from "react-native";
 import DataJson from '../data/data.json'
 import messageData from '../data/message-data.json'
 import DataUser from '../data/data.json'
@@ -17,11 +17,13 @@ export function DataProvider({children}) {
     const [followingData , setFollowingData] = useState([])
     const [followersData , setFollowersData] = useState([])
     const [post , setPost] = useState([])
+    const [usersData , setUsersData] = useState([])
 
 
     useEffect(() => {
         seenChat();
         setUserData(DataUser.userInformation)
+        setUsersData(DataUser.usersInformation)
         setPost(DataUser.post)
         setFollowingData(DataUser.following)
         setFollowersData(DataUser.followers)
@@ -164,6 +166,34 @@ export function DataProvider({children}) {
         setUserData(newUserData)
     }
 
+    const unFollowUser = (id) => {
+        Alert.alert( 'unfollow user', 'Are you sure you want to unfollow this user?',[
+            {
+                text:'cancel'
+            },
+            {
+                text:'yes',
+                onPress: () => {
+                    // setCommentsData(prevState => prevState.filter(item=>item.id!=id));
+                    const newUsersData =  [...usersData]
+                    const newUserData = [...userData]
+                    const followingNumber = newUsersData.findIndex(item=>item.id==id)
+                    newUsersData[followingNumber].following = !newUsersData[followingNumber].following
+                    newUserData[0].numberFollowing -= 1;
+                    setUsersData(newUsersData)
+                    setUserData(newUserData)
+                }
+            }
+        ])
+    } 
+
+    const followUser = (id) => {
+        const newUsersData =  [...usersData]
+        const followingNumber = newUsersData.findIndex(item=>item.id==id)
+        newUsersData[followingNumber].following = !newUsersData[followingNumber].following
+        setUsersData(newUsersData)
+    }
+
     return (
         <DatasContext.Provider value={{
             hDataPost,
@@ -187,7 +217,11 @@ export function DataProvider({children}) {
             userData,
             post,
             followingData,
-            followersData
+            setFollowingData,
+            followersData,
+            usersData,
+            unFollowUser,
+            followUser
         }}>
             {children}
         </DatasContext.Provider>

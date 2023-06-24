@@ -31,7 +31,7 @@ function PostProfile({navigation}) {
 }
 
 export default function Profile({navigation}) {
-    const { userData , post , followingData , followersData } = useDatas();
+    const { userData , post , followingData , followersData , usersData , contFollowing ,contFollowers } = useDatas();
     const lengthPost = (userData[0].post.length)
     const ceilLengthPost = Math.ceil(lengthPost/3)
 
@@ -74,11 +74,11 @@ export default function Profile({navigation}) {
                                 <Text>Posts</Text>
                             </View>
                             <TouchableOpacity onPress={()=> navigation.navigate('Followers')}>
-                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{followersData.length}</Text>
+                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{userData[0].numberFollowers}</Text>
                                 <Text>Followers</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={()=> navigation.navigate('Following')}>
-                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{followingData.length}</Text>
+                                <Text style={{alignSelf:"center" , fontWeight:"bold" , fontSize:17}}>{userData[0].numberFollowing}</Text>
                                 <Text>Following</Text>
                             </TouchableOpacity>
                         </View>

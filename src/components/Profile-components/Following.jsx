@@ -1,14 +1,26 @@
+import React from 'react';
 import { Text, View , Image , ScrollView , TextInput , TouchableOpacity , Button} from 'react-native';
 import { useDatas } from '../../hooks/datasContext';
 import data from '../../data/data.json'
+import { useNavigation } from '@react-navigation/native';
 
 export default function userelled() {
-    const { followingData } = useDatas();    
+    const { followingData , followUnfollow , setFollowingData , usersData , unFollowUser } = useDatas();    
+
+
+    // React.useEffect(
+    //     () =>
+    //         navigation.addListener('beforeRemove',() => {
+    //         setFollowingData(prevState => prevState.filter(item=>item.follow==true));
+    //     }),
+    //     [navigation]
+    // );
+
     return (
         <ScrollView>
             <View style={{paddingHorizontal:15 , justifyContent:"flex-end" , paddingVertical:5}}>
-            {followingData.map((user) => (
-
+            {usersData.map((user) => (
+                user.following ?
                     <View style={{flexDirection:"row" , alignItems:"center" , width:"100%" , marginVertical:10}}>
                         <View style={{width:"70%" , flexDirection:"row" , alignItems:"center"}}>
                             <View style={{width:"25%"}}>
@@ -30,22 +42,15 @@ export default function userelled() {
                             </View>
                         </View>
                         <View style={{width:"30%" , justifyContent:"flex-end"}}>
-                            {user.follow ?
-                                <TouchableOpacity style={{backgroundColor:"#DBDBDB" , padding:10 , borderRadius:7}}>
+                                <TouchableOpacity onPress={()=> unFollowUser(user.id)} style={{backgroundColor:"#DBDBDB" , padding:10 , borderRadius:7}}>
                                     <Text style={{fontWeight:700, color:"black" , alignSelf:"center"}}>
                                         Following
                                     </Text>
                                 </TouchableOpacity>
-                                :
-                                <TouchableOpacity style={{backgroundColor:"#6192D7" , padding:10 , borderRadius:7}}>
-                                    <Text style={{fontWeight:700 , color:"white" , alignSelf:"center"}}>
-                                        Follow
-                                    </Text>
-                                </TouchableOpacity>
-                            }
                         </View>
                     </View>
-
+                :
+                null
             ))}
 
             </View>
