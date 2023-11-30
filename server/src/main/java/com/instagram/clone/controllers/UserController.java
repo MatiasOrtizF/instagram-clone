@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -21,4 +21,5 @@ public class UserController {
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
+
 }

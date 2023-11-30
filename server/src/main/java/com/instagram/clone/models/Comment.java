@@ -4,14 +4,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Date;
-
 
 @Data
 @Entity
-@Table(name = "post")
-public class Post {
-
+@Table(name = "comment")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,7 +26,4 @@ public class Post {
 
     @Column(name = "likes;")
     private Integer likes;
-
-    @Column(name = "image")
-    private String image;
 }

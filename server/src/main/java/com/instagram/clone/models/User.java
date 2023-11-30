@@ -42,12 +42,21 @@ public class User {
     @Column(name = "verified")
     private Boolean verified;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "image_profile")
+    private String imageProfile;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "link")
     private String link;
+
+    @Column(name = "number_post")
+    private Long numberPost;
+
+    @Column(name = "number_followers")
+    private Long numberFollowers;
+
+    @Column(name = "number_following")
+    private Long numberFollowing;
 }
