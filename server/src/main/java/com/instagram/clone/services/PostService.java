@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.module.ResolutionException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PostService {
@@ -38,6 +39,15 @@ public class PostService {
 
     public Post getPost(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("The post with this id: " + id + "is not found"));
+    }
+
+    public List<Post> getAllPostByUsername(String token, String userName) {
+        if(authService.validationToken(token)) {
+            User user = userRepository.findByUserName(userName);
+            if(user != null) {
+                return postRepository.findByUserId(user.getId());
+            } throw new NoSuchElementException("User does not exist");
+        } throw new UnauthorizedException("Unauthorized: invalid token");
     }
 
     public Post addPost(Post post, String token) {

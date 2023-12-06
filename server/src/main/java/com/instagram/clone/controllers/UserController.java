@@ -5,7 +5,7 @@ import com.instagram.clone.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.9:8081"})
+@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.4:8081"})
 @RequestMapping("/api/user")
 @RestController
 public class UserController {

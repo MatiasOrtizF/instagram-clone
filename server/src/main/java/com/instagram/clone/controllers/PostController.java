@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.9:8081"})
+@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.4:8081"})
 @RequestMapping("/api/post")
 public class PostController {
     private final PostService postService;
@@ -27,17 +27,27 @@ public class PostController {
         try {
             return ResponseEntity.ok(postService.getAllPosts(token));
         } catch (UnauthorizedException e) {
-            return ResponseEntity.badRequest().body("Unauthorized: invalid token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
     }
 
-    @GetMapping("{id}")
+    @GetMapping("p/{id}")
     public ResponseEntity<?> getPost(@PathVariable Long id) {
         try {
-            postService.getPost(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(postService.getPost(id));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.badRequest().body("Post does not exist");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Post does not exist");
+        }
+    }
+
+    @GetMapping("{userName}")
+    public ResponseEntity<?> getAllPostByUsername(@PathVariable String userName, @RequestHeader(value = "Authorization")String token) {
+        try {
+            return ResponseEntity.ok(postService.getAllPostByUsername(token, userName));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist");
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
     }
 
@@ -46,7 +56,7 @@ public class PostController {
         try {
             return ResponseEntity.ok(postService.addPost(post, token));
         } catch (UnauthorizedException e) {
-            return ResponseEntity.badRequest().body("Unauthorized: invalid token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
     }
 
@@ -56,7 +66,7 @@ public class PostController {
             postService.deletePost(id, token);
             return ResponseEntity.ok().build();
         } catch (UnauthorizedException e) {
-            return ResponseEntity.badRequest().body("Unauthorized: invalid token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
     }
 

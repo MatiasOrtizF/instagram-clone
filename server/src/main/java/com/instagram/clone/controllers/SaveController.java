@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.9:8081"})
+@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.4:8081"})
 @RequestMapping("/api/save")
 public class SaveController {
 
@@ -23,13 +23,32 @@ public class SaveController {
     }
 
 
+    @PostMapping
     public ResponseEntity<?> savePost(@RequestParam Long postId, @RequestHeader(value = "Authorization")String token) {
         try {
             return ResponseEntity.ok(saveService.savePost(token, postId));
         } catch (AlreadyExistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The user has already saved this post");
         } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Motorcycle does not exist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post does not exist");
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllSave(@RequestHeader(value = "Authorization")String token) {
+        try {
+            return ResponseEntity.ok(saveService.getAllSave(token));
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+        }
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<?> savedPost(@PathVariable Long id, @RequestHeader(value = "Authorization")String token) {
+        try {
+            return ResponseEntity.ok().body(saveService.savedPost(id, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }

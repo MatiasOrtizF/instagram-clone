@@ -3,65 +3,69 @@ package com.instagram.clone.services;
 import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
+import com.instagram.clone.models.Like;
 import com.instagram.clone.models.Post;
 import com.instagram.clone.models.Save;
 import com.instagram.clone.models.User;
+import com.instagram.clone.repositories.LikeRepository;
 import com.instagram.clone.repositories.PostRepository;
-import com.instagram.clone.repositories.SaveRepository;
 import com.instagram.clone.repositories.UserRepository;
 import com.instagram.clone.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SaveService {
+public class LikeService {
 
-    private final SaveRepository saveRepository;
     private final AuthService authService;
+
     private final JWTUtil jwtUtil;
-    private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public SaveService (SaveRepository saveRepository, AuthService authService, JWTUtil jwtUtil,
-                        UserRepository userRepository,
-                        PostRepository postRepository) {
-        this.saveRepository = saveRepository;
+    public LikeService (AuthService authService, JWTUtil jwtUtil,
+                        LikeRepository likeRepository,
+                        PostRepository postRepository,
+                        UserRepository userRepository) {
         this.authService = authService;
         this.jwtUtil = jwtUtil;
-        this.userRepository = userRepository;
+        this.likeRepository = likeRepository;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
-    public Save savePost (String token, Long id) {
+    public Like likePost (String token, Long id) {
         if(authService.validationToken(token)) {
             String userId = jwtUtil.getKey(token);
-            if(!saveRepository.existsByPostIdAndUserId(id, Long.valueOf(userId))) {
+            if(!likeRepository.existsByPostIdAndUserId(id, Long.valueOf(userId))) {
                 Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + id + " is incorrect"));
                 User user = userRepository.findById(Long.valueOf(userId)).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + id + " is incorrect"));
 
-                Save save = new Save();
-                save.setUser(user);
-                save.setPost(post);
+                Like like = new Like();
+                like.setUser(user);
+                like.setPost(post);
 
-                return saveRepository.save(save);
-            } throw new AlreadyExistException("The user has already saved this post");
+                return likeRepository.save(like);
+            } throw new AlreadyExistException("The user has already liked this post");
         } throw new UnauthorizedException("Unauthorized: invalid token");
     }
 
-    public List<Save> getAllSave(String token) {
+    public List<Like> getAllLikes(String token) {
         if(authService.validationToken(token)) {
             String userId = jwtUtil.getKey(token);
-            return saveRepository.findAll();
+            return likeRepository.findAll();
         } throw new UnauthorizedException("Unauthorized: invalid token");
     }
 
-    public Boolean savedPost(Long postId, String token) {
+    public Boolean likedPost(Long postId, String token) {
         if(authService.validationToken(token)) {
             String userId = jwtUtil.getKey(token);
-            if(saveRepository.existsByPostIdAndUserId(postId, Long.valueOf(userId))) {
+            if(likeRepository.existsByPostIdAndUserId(postId, Long.valueOf(userId))) {
                 return true;
             } return false;
         } throw new UnauthorizedException("Unauthorized: invalid token");
