@@ -28,12 +28,12 @@ public class AuthService {
         return (userId != null);
     }
 
-    public User validationEmail (String email) {
-        return userRepository.findByEmail(email);
+    public User validationUsername (String username) {
+        return userRepository.findByUserName(username);
     }
 
     public LoginResponse validationCredentials (User user) {
-        User userLogged = validationEmail(user.getEmail());
+        User userLogged = validationUsername(user.getUserName());
         if(userLogged != null) {
             String passwordHashed = userLogged.getPassword();
 
@@ -48,6 +48,6 @@ public class AuthService {
 
                 return response;
             }
-        } throw new InvalidCredentialsException("Invalid email or password");
+        } throw new InvalidCredentialsException("Invalid username or password");
     }
 }

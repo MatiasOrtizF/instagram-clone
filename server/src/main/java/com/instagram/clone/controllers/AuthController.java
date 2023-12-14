@@ -25,7 +25,7 @@ public class AuthController {
         try {
             return ResponseEntity.ok(authService.validationCredentials(user));
         } catch (InvalidCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid user or password");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred during login");
         }
