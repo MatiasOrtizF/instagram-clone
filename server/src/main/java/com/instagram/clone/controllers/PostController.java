@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.4:8081"})
+@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.16:8081"})
 @RequestMapping("/api/post")
 public class PostController {
     private final PostService postService;

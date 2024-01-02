@@ -3,6 +3,7 @@ package com.instagram.clone.services;
 import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
+import com.instagram.clone.exceptions.UserMismatchException;
 import com.instagram.clone.models.Post;
 import com.instagram.clone.models.Save;
 import com.instagram.clone.models.User;
@@ -66,4 +67,19 @@ public class SaveService {
             } return false;
         } throw new UnauthorizedException("Unauthorized: invalid token");
     }
+
+    public boolean unSavePost(Long id, String token) {
+        if(authService.validationToken(token)) {
+            String userId = jwtUtil.getKey(token);
+            User user = userRepository.findById(Long.valueOf(userId)).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + id + " is incorrect"));
+            Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + id + " is incorrect"));
+
+            Save save = saveRepository.findByUserAndPost(user, post);
+            if(save.getUser().getId().equals(Long.valueOf(userId))) {
+                saveRepository.delete(save);
+                return true;
+            } throw new UserMismatchException("User mismatch");
+        } throw new UnauthorizedException("Unauthorized: invalid token");
+    }
+
 }

@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.4:8081"})
+@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.16:8081"})
 @RequestMapping("/api/comment")
 public class CommentController {
 

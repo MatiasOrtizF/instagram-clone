@@ -14,6 +14,7 @@ import com.instagram.clone.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -42,6 +43,7 @@ public class CommentService {
 
                 comment.setUser(user);
                 comment.setPost(post);
+                comment.setCreatedAt(LocalDate.now());
                 comment.setLikes(0);
 
                 return commentRepository.save(comment);

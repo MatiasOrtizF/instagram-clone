@@ -3,6 +3,7 @@ package com.instagram.clone.controllers;
 import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
+import com.instagram.clone.exceptions.UserMismatchException;
 import com.instagram.clone.repositories.SaveRepository;
 import com.instagram.clone.services.SaveService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.4:8081"})
+@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.16:8081"})
 @RequestMapping("/api/save")
 public class SaveController {
 
@@ -53,4 +54,19 @@ public class SaveController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
     }
+
+    @DeleteMapping({"id"})
+    public ResponseEntity<String> unSavePost(@PathVariable Long id, @RequestHeader(value = "Authorization") String token) {
+        try {
+            saveService.unSavePost(id, token);
+            return ResponseEntity.ok().build();
+        } catch (UserMismatchException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User Mismatch");
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Motorcycle or User does not exist");
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+        }
+    }
+
 }
