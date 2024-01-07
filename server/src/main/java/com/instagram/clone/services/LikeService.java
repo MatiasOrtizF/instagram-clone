@@ -50,6 +50,9 @@ public class LikeService {
                 like.setUser(user);
                 like.setPost(post);
 
+                post.setComments(post.getComments()+1);
+                postRepository.save(post);
+
                 return likeRepository.save(like);
             } throw new AlreadyExistException("The user has already liked this post");
         } throw new UnauthorizedException("Unauthorized: invalid token");

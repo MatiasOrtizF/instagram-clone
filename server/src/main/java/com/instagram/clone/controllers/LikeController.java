@@ -24,8 +24,8 @@ public class LikeController {
         this.likeRepository = likeRepository;
     }
 
-    @PostMapping
-    public ResponseEntity<?> likePost(@RequestParam Long postId, @RequestHeader(value = "Authorization")String token) {
+    @PostMapping("{postId}")
+    public ResponseEntity<?> likePost(@PathVariable Long postId, @RequestHeader(value = "Authorization")String token) {
         try {
             return ResponseEntity.ok(likeService.likePost(token, postId));
         } catch (AlreadyExistException e) {
@@ -46,10 +46,10 @@ public class LikeController {
         }
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<?> likedPost(@PathVariable Long id, @RequestHeader(value = "Authorization")String token) {
+    @GetMapping("{postId}")
+    public ResponseEntity<?> likedPost(@PathVariable Long postId, @RequestHeader(value = "Authorization")String token) {
         try {
-            return ResponseEntity.ok().body(likeService.likedPost(id, token));
+            return ResponseEntity.ok().body(likeService.likedPost(postId, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }

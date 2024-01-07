@@ -46,6 +46,9 @@ public class CommentService {
                 comment.setCreatedAt(LocalDate.now());
                 comment.setLikes(0);
 
+                post.setComments(post.getComments()+1);
+                postRepository.save(post);
+
                 return commentRepository.save(comment);
         } throw new UnauthorizedException("Unauthorized: invalid token");
     }
