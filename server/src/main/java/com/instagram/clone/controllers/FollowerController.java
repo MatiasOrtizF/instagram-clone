@@ -33,6 +33,8 @@ public class FollowerController {
     public ResponseEntity<?> addFollower(@PathVariable Long userId, @RequestHeader(value = "Authorization")String token) {
         try {
             return ResponseEntity.ok(followerService);
-        } catch ()
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+        }
     }
 }
