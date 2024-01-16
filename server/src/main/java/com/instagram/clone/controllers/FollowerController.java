@@ -1,5 +1,6 @@
 package com.instagram.clone.controllers;
 
+import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.services.FollowerService;
@@ -29,10 +30,12 @@ public class FollowerController {
         }
     }
 
-    @PostMapping("{userId}")
-    public ResponseEntity<?> addFollower(@PathVariable Long userId, @RequestHeader(value = "Authorization")String token) {
+    @PostMapping("{followingUserId}")
+    public ResponseEntity<?> addFollower(@PathVariable Long followingUserId, @RequestHeader(value = "Authorization")String token) {
         try {
-            return ResponseEntity.ok(followerService);
+            return ResponseEntity.ok(followerService.addFollow(followingUserId, token));
+        }catch (AlreadyExistException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The user has already follow this user");
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
