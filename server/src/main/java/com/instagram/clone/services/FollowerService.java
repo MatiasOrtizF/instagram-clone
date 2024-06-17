@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FollowerService {
@@ -21,14 +22,12 @@ public class FollowerService {
     private final FollowerRepository followerRepository;
     private final AuthService authService;
     private final UserRepository userRepository;
-    private final JWTUtil jwtUtil;
 
     @Autowired
-    public FollowerService (FollowerRepository followerRepository, AuthService authService, UserRepository userRepository, JWTUtil jwtUtil) {
+    public FollowerService (FollowerRepository followerRepository, AuthService authService, UserRepository userRepository) {
         this.followerRepository = followerRepository;
         this.authService = authService;
         this.userRepository = userRepository;
-        this.jwtUtil = jwtUtil;
     }
 
     public List<Follower> getAllFollowers(String token, Long id) {
@@ -39,10 +38,10 @@ public class FollowerService {
 
     public Follower addFollow(Long followingUserId, String token) {
         if(authService.validationToken(token)) {
-            String followerUserId = jwtUtil.getKey(token);
-            if(!followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(followingUserId, Long.valueOf(followerUserId))) {
-                User userFollowing = userRepository.findById(Long.valueOf(followingUserId)).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + followingUserId + " is incorrect"));
-                User userFollower = userRepository.findById(Long.valueOf(followerUserId)).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + followerUserId + " is incorrect"));
+            Long followerUserId = authService.getUserId(token);
+            if(!followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(followingUserId, followerUserId)) {
+                User userFollowing = userRepository.findById(followingUserId).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + followingUserId + " is incorrect"));
+                User userFollower = userRepository.findById(followerUserId).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + followerUserId + " is incorrect"));
 
                 Follower follower = new Follower();
                 follower.setFollowingUser(userFollowing);

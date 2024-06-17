@@ -50,4 +50,9 @@ public class AuthService {
             }
         } throw new InvalidCredentialsException("Invalid username or password");
     }
+
+    public Long getUserId(String token) {
+        String userId = jwtUtil.getKey(token);
+        return Long.valueOf(userId);
+    }
 }
