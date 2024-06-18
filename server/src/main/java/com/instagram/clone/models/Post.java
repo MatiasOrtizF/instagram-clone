@@ -1,6 +1,7 @@
 package com.instagram.clone.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -21,18 +22,20 @@ public class Post {
     @JoinColumn(name = "id_user")
     private User user;
 
-    @Column(name = "content")
+    @NotBlank(message = "image is mandatory")
+    @Column(name = "image", nullable = false)
+    private String image;
+
+    @NotBlank(message = "content is mandatory")
+    @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "createdAt")
-    private LocalDate createdAt;
-
-    @Column(name = "likes")
+    @Column(name = "likes", nullable = false)
     private Integer likes;
 
-    @Column(name = "comments")
+    @Column(name = "comments", nullable = false)
     private Integer comments;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "createdAt", nullable = false)
+    private LocalDate createdAt;
 }

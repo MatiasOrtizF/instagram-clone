@@ -10,6 +10,7 @@ import com.instagram.clone.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -47,8 +48,14 @@ public class PostService {
     public Post addPost(Post post, String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
+
             User user =  userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("The user is not found"));
+            LocalDate dateNow = LocalDate.now();
+
+            post.setComments(0);
+            post.setLikes(0);
             post.setUser(user);
+            post.setCreatedAt(dateNow);
 
             return postRepository.save(post);
         } throw new UnauthorizedException();

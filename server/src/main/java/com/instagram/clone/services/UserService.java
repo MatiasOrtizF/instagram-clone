@@ -9,7 +9,6 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 
@@ -32,11 +31,11 @@ public class UserService {
 
         User newUser = new User();
 
-        newUser.setName(userRequest.getName());
-        newUser.setLastName(userRequest.getLastName());
-        newUser.setEmail(userRequest.getEmail());
+        newUser.setName(capitalizeFirstLetter(userRequest.getName()));
+        newUser.setLastName(capitalizeFirstLetter(userRequest.getLastName()));
+        newUser.setEmail(userRequest.getEmail().toLowerCase());
         newUser.setPassword(hash);
-        newUser.setUserName(userRequest.getUserName());
+        newUser.setUserName(userRequest.getUserName().toLowerCase());
 
         newUser.setVerified(false);
         newUser.setNumberFollowers(0L);
@@ -75,5 +74,9 @@ public class UserService {
             return userRepository.save(user);
 
         } throw new UnauthorizedException();
+    }
+
+    private String capitalizeFirstLetter(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
 }
