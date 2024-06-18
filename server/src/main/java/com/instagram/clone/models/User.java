@@ -14,34 +14,35 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @NotBlank(message = "name is mandatory")
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @NotBlank(message = "last name is mandatory")
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @NotBlank(message = "email is mandatory")
     @Email(message = "invalid email")
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @NotBlank(message = "password is mandatory")
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotBlank(message = "username is mandatory")
     //validar para que sea unico
     @Size(min = 3, max=20, message = "username size must be between 2 and 50")
-    @Column(name = "user_name")
+    @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
-    @Column(name = "verified")
+    @Column(name = "verified", nullable = false)
     private Boolean verified;
 
     @Column(name = "image_profile")
@@ -53,12 +54,12 @@ public class User {
     @Column(name = "link")
     private String link;
 
-    @Column(name = "number_post")
+    @Column(name = "number_post", nullable = false)
     private Long numberPost;
 
-    @Column(name = "number_followers")
+    @Column(name = "number_followers", nullable = false)
     private Long numberFollowers;
 
-    @Column(name = "number_following")
+    @Column(name = "number_following", nullable = false)
     private Long numberFollowing;
 }
