@@ -38,6 +38,11 @@ public class UserService {
         newUser.setPassword(hash);
         newUser.setUserName(userRequest.getUserName());
 
+        newUser.setVerified(false);
+        newUser.setNumberFollowers(0L);
+        newUser.setNumberFollowing(0L);
+        newUser.setNumberPost(0L);
+
         return userRepository.save(newUser);
     }
 

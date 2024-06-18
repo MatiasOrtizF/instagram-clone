@@ -1,6 +1,7 @@
 package com.instagram.clone.services;
 
 import com.instagram.clone.exceptions.InvalidCredentialsException;
+import com.instagram.clone.models.LoginRequest;
 import com.instagram.clone.models.LoginResponse;
 import com.instagram.clone.models.User;
 import com.instagram.clone.repositories.UserRepository;
@@ -28,17 +29,17 @@ public class AuthService {
         return (userId != null);
     }
 
-    public User validationUsername (String username) {
-        return userRepository.findByUserName(username);
+    public User validationUsername (String email) {
+        return userRepository.findByEmail(email);
     }
 
-    public LoginResponse validationCredentials (User user) {
-        User userLogged = validationUsername(user.getUserName());
+    public LoginResponse validationCredentials (LoginRequest loginRequest) {
+        User userLogged = validationUsername(loginRequest.getEmail());
         if(userLogged != null) {
             String passwordHashed = userLogged.getPassword();
 
             Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-            if(argon2.verify(passwordHashed, user.getPassword())) {
+            if(argon2.verify(passwordHashed, loginRequest.getPassword())) {
                 userLogged.setPassword("");
                 String tokenJWT = jwtUtil.create(userLogged.getId().toString(), userLogged.getEmail());
 

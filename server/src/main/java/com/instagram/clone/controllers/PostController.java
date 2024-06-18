@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.16:8081"})
+@CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.9:8081"})
 @RequestMapping("/api/post")
 public class PostController {
     private final PostService postService;
@@ -63,8 +63,7 @@ public class PostController {
     @DeleteMapping("{id}")
     public ResponseEntity<?> deletePost(@PathVariable Long id, @RequestHeader(value = "Authorization")String token) {
         try {
-            postService.deletePost(id, token);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(postService.deletePost(id, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }

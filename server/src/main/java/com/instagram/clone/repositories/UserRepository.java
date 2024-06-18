@@ -1,6 +1,5 @@
 package com.instagram.clone.repositories;
 
-import com.instagram.clone.models.Post;
 import com.instagram.clone.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,7 @@
 package com.instagram.clone.controllers;
 
 import com.instagram.clone.exceptions.InvalidCredentialsException;
+import com.instagram.clone.models.LoginRequest;
 import com.instagram.clone.models.User;
 import com.instagram.clone.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,9 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity<?> validationCredentials(@RequestBody User user) {
+    public ResponseEntity<?> validationCredentials(@RequestBody LoginRequest loginRequest) {
         try {
-            return ResponseEntity.ok(authService.validationCredentials(user));
+            return ResponseEntity.ok(authService.validationCredentials(loginRequest));
         } catch (InvalidCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid user or password");
         } catch (Exception e) {
