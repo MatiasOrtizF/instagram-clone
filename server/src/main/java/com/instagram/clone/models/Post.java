@@ -1,5 +1,6 @@
 package com.instagram.clone.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class Post {
     @Column(name = "id")
     private Long id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_user")
     private User user;

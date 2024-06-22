@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "user")
@@ -37,7 +39,6 @@ public class User {
     private String password;
 
     @NotBlank(message = "username is mandatory")
-    //validar para que sea unico
     @Size(min = 3, max=20, message = "username size must be between 2 and 50")
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
@@ -62,4 +63,7 @@ public class User {
 
     @Column(name = "number_following", nullable = false)
     private Long numberFollowing;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> post;
 }
