@@ -24,7 +24,7 @@ public class FollowerController {
     @GetMapping("{userId}")
     public ResponseEntity<?> getAllFollowers(@PathVariable Long userId, @RequestHeader(value = "Authorization")String token) {
         try {
-            return ResponseEntity.ok(followerService.getAllFollowers(token, userId));
+            return ResponseEntity.ok(followerService.getAllFollowers(userId, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
@@ -34,8 +34,19 @@ public class FollowerController {
     public ResponseEntity<?> addFollower(@PathVariable Long followingUserId, @RequestHeader(value = "Authorization")String token) {
         try {
             return ResponseEntity.ok(followerService.addFollow(followingUserId, token));
-        }catch (AlreadyExistException e) {
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist");
+        } catch (AlreadyExistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The user has already follow this user");
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+        }
+    }
+
+    @DeleteMapping("{followingUserId}")
+    public ResponseEntity<?> deleteFollow(@PathVariable Long followingUserId, @RequestHeader(value = "Authorization")String token) {
+        try {
+            return ResponseEntity.ok(followerService.deleteFollow(followingUserId, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
