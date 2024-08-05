@@ -8,7 +8,6 @@ import com.instagram.clone.models.User;
 import com.instagram.clone.repositories.CommentRepository;
 import com.instagram.clone.repositories.PostRepository;
 import com.instagram.clone.repositories.UserRepository;
-import com.instagram.clone.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,21 +30,24 @@ public class CommentService {
         this.userRepository = userRepository;
     }
 
-    public Comment commentPost (String token, Comment comment) {
+    public Comment commentPost (Long postId, String token, String comment) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
-            Post post = postRepository.findById(comment.getPost().getId()).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + comment.getPost().getId() + " is incorrect"));
+            Post post = postRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + postId + " is incorrect"));
             User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + userId + " is incorrect"));
 
-            comment.setUser(user);
-            comment.setPost(post);
-            comment.setCreatedAt(LocalDate.now());
-            comment.setLikes(0);
+            Comment newComment = new Comment();
+
+            newComment.setContent(comment);
+            newComment.setUser(user);
+            newComment.setPost(post);
+            newComment.setCreatedAt(LocalDate.now());
+            newComment.setLikes(0);
 
             post.setComments(post.getComments()+1);
             postRepository.save(post);
 
-            return commentRepository.save(comment);
+            return commentRepository.save(newComment);
         } throw new UnauthorizedException("Unauthorized: invalid token");
     }
 

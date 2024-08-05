@@ -31,23 +31,12 @@ public class PostController {
         }
     }
 
-    @GetMapping("p/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<?> getPost(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(postService.getPost(id));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Post does not exist");
-        }
-    }
-
-    @GetMapping("{userName}")
-    public ResponseEntity<?> getAllPostByUsername(@PathVariable String userName, @RequestHeader(value = "Authorization")String token) {
-        try {
-            return ResponseEntity.ok(postService.getAllPostByUsername(token, userName));
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist");
-        } catch (UnauthorizedException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
     }
 

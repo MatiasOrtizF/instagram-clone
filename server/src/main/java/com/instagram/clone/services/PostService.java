@@ -36,15 +36,6 @@ public class PostService {
         return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("The post with this id: " + id + "is not found"));
     }
 
-    public List<Post> getAllPostByUsername(String token, String userName) {
-        if(authService.validationToken(token)) {
-            User user = userRepository.findByUserName(userName);
-            if(user != null) {
-                return postRepository.findByUserId(user.getId());
-            } throw new NoSuchElementException("User does not exist");
-        } throw new UnauthorizedException();
-    }
-
     public Post addPost(Post post, String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);

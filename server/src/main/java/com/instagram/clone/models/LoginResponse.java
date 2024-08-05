@@ -7,5 +7,5 @@ public class LoginResponse {
 
     private String token;
 
-    private User user;
+    private String imageProfile;
 }

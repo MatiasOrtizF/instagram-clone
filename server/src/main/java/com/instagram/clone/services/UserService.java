@@ -1,5 +1,6 @@
 package com.instagram.clone.services;
 
+import com.instagram.clone.dto.UserDTO;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.models.User;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -53,9 +55,26 @@ public class UserService {
         } throw new UnauthorizedException();
     }
 
-    public List<User> getUserByUserName(String word, String token) {
+    public List<UserDTO> getUserByUserName(String word, String token) {
         if(authService.validationToken(token)) {
-            return userRepository.findByWord(word);
+            Long userId = authService.getUserId(token);
+
+            List<User> users =  userRepository.findByWord(word);
+
+            List<User> newUsers =  users.stream()
+                    .filter(user -> !user.getId().equals(userId))
+                    .toList();
+
+            return newUsers.stream()
+                    .map(user -> new UserDTO(user.getId(), user.getImageProfile(), user.getUserName(), user.getName(), user.getLastName(), user.getVerified()))
+                    .collect(Collectors.toList());
+
+        } throw new UnauthorizedException();
+    }
+
+    public User getUser(Long id, String token) {
+        if(authService.validationToken(token)) {
+            return userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + id + " is incorrect"));
         } throw new UnauthorizedException();
     }
 

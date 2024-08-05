@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @CrossOrigin(origins = {"http://localhost:19006/", "192.168.0.9:8081"})
 @RequestMapping("/api/user")
 @RestController
@@ -44,12 +46,25 @@ public class UserController {
         }
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<?> getUser(@PathVariable Long id, @RequestHeader(value = "Authorization") String token) {
+        try {
+            return ResponseEntity.ok(userService.getUser(id, token));
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist");
+        }
+    }
+
     @PutMapping
     public ResponseEntity<?> editUser(@RequestBody User user, @RequestHeader(value = "Authorization") String token) {
         try {
             return ResponseEntity.ok(userService.editPlayer(user, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist");
         }
     }
 

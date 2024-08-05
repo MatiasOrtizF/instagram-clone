@@ -1,5 +1,6 @@
 package com.instagram.clone.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -64,6 +65,7 @@ public class User {
     @Column(name = "number_following", nullable = false)
     private Long numberFollowing;
 
+    @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> post;
 }

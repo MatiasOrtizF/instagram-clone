@@ -45,11 +45,11 @@ public class AuthService {
 
                 LoginResponse response = new LoginResponse();
                 response.setToken(tokenJWT);
-                response.setUser(userLogged);
+                response.setImageProfile(userLogged.getImageProfile());
 
                 return response;
             }
-        } throw new InvalidCredentialsException("Invalid username or password");
+        } throw new InvalidCredentialsException("Invalid email or password");
     }
 
     public Long getUserId(String token) {

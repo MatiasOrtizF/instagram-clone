@@ -3,8 +3,6 @@ package com.instagram.clone.controllers;
 import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
-import com.instagram.clone.exceptions.UserMismatchException;
-import com.instagram.clone.repositories.SaveRepository;
 import com.instagram.clone.services.SaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +22,8 @@ public class SaveController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<?> savePost(@RequestParam Long postId, @RequestHeader(value = "Authorization")String token) {
+    @PostMapping("{postId}")
+    public ResponseEntity<?> savePost(@PathVariable Long postId, @RequestHeader(value = "Authorization")String token) {
         try {
             return ResponseEntity.ok(saveService.savePost(token, postId));
         } catch (AlreadyExistException e) {
@@ -46,27 +44,23 @@ public class SaveController {
         }
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<?> savedPost(@PathVariable Long id, @RequestHeader(value = "Authorization")String token) {
+    @GetMapping("{postId}")
+    public ResponseEntity<?> savedPost(@PathVariable Long postId, @RequestHeader(value = "Authorization")String token) {
         try {
-            return ResponseEntity.ok().body(saveService.savedPost(id, token));
+            return ResponseEntity.ok().body(saveService.savedPost(postId, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }
     }
 
-    @DeleteMapping({"id"})
-    public ResponseEntity<String> unSavePost(@PathVariable Long id, @RequestHeader(value = "Authorization") String token) {
+    @DeleteMapping("{postId}")
+    public ResponseEntity<?> unSavePost(@PathVariable Long postId, @RequestHeader(value = "Authorization")String token) {
         try {
-            saveService.unSavePost(id, token);
-            return ResponseEntity.ok().build();
-        } catch (UserMismatchException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User Mismatch");
+            return ResponseEntity.ok().body(saveService.unSavePost(postId, token));
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Motorcycle or User does not exist");
-        } catch (UnauthorizedException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Save or user does not exist");
         }
     }
-
 }

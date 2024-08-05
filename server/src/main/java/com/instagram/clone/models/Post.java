@@ -19,7 +19,6 @@ public class Post {
     @Column(name = "id")
     private Long id;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_user")
     private User user;

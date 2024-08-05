@@ -2,8 +2,6 @@ package com.instagram.clone.controllers;
 
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
-import com.instagram.clone.models.Comment;
-import com.instagram.clone.models.User;
 import com.instagram.clone.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +20,10 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping
-    public ResponseEntity<?> commentPost(@RequestBody Comment comment, @RequestHeader(value = "Authorization") String token) {
+    @PostMapping("{postId}")
+    public ResponseEntity<?> commentPost(@PathVariable Long postId, @RequestParam String comment, @RequestHeader(value = "Authorization") String token) {
         try {
-            return ResponseEntity.ok(commentService.commentPost(token, comment));
+            return ResponseEntity.ok(commentService.commentPost(postId, token, comment));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post does not exist");
         } catch (UnauthorizedException e) {

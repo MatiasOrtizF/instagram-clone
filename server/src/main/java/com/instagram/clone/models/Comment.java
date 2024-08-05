@@ -28,6 +28,6 @@ public class Comment {
     @Column(name = "createdAt")
     private LocalDate createdAt;
 
-    @Column(name = "likes;")
+    @Column(name = "likes")
     private Integer likes;
 }
