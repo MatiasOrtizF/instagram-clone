@@ -1,8 +1,10 @@
 package com.instagram.clone.services;
 
+import com.instagram.clone.dto.PostDTO;
 import com.instagram.clone.dto.UserDTO;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
+import com.instagram.clone.models.Post;
 import com.instagram.clone.models.User;
 import com.instagram.clone.models.UserRequest;
 import com.instagram.clone.repositories.UserRepository;
@@ -83,10 +85,10 @@ public class UserService {
             Long userId = authService.getUserId(token);
             User userEdit = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + userId + " is incorrect"));
 
-            userEdit.setName(user.getName());
-            userEdit.setLastName(user.getLastName());
+            userEdit.setName(capitalizeFirstLetter(user.getName()));
+            userEdit.setLastName(capitalizeFirstLetter(user.getLastName()));
             userEdit.setEmail(user.getEmail());
-            userEdit.setUserName(user.getUserName());
+            userEdit.setUserName(user.getUserName().toLowerCase());
             userEdit.setDescription(user.getDescription());
             userEdit.setLink(user.getLink());
 

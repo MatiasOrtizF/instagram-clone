@@ -1,12 +1,10 @@
 package com.instagram.clone.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 
 @Data
@@ -23,6 +21,7 @@ public class Post {
     @JoinColumn(name = "id_user")
     private User user;
 
+    @Lob
     @NotBlank(message = "image is mandatory")
     @Column(name = "image", nullable = false)
     private String image;

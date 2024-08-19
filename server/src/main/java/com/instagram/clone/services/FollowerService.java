@@ -40,7 +40,7 @@ public class FollowerService {
                     .map(follower -> new UserDTO(follower.getFollowerUser().getId(), follower.getFollowerUser().getImageProfile(), follower.getFollowerUser().getUserName(), follower.getFollowerUser().getName(), follower.getFollowerUser().getLastName(), follower.getFollowerUser().getVerified()))
                     .collect(Collectors.toList());
 
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
     @Transactional
@@ -57,23 +57,34 @@ public class FollowerService {
 
                 followerRepository.save(follower);
 
+                userFollowing.setNumberFollowers(userFollowing.getNumberFollowers()+1);
+                userFollower.setNumberFollowing(userFollower.getNumberFollowing()+1);
+
                 Map<String, Boolean> response = new HashMap<>();
                 response.put("following", Boolean.TRUE);
                 return response;
+
             } throw new AlreadyExistException("The user has already follow this user");
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
+    @Transactional
     public Map<String, Boolean> deleteFollow(Long followingUserId, String token) {
         if(authService.validationToken(token)) {
             Long followerUserId = authService.getUserId(token);
             Follower follower = followerRepository.findByFollowerUser_IdAndFollowingUser_Id(followerUserId, followingUserId);
 
+            User userFollowing = userRepository.findById(followingUserId).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + followingUserId + " is incorrect"));
+            User userFollower = userRepository.findById(followerUserId).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + followerUserId + " is incorrect"));
+
             followerRepository.delete(follower);
+
+            userFollowing.setNumberFollowers(userFollowing.getNumberFollowers()-1);
+            userFollower.setNumberFollowing(userFollower.getNumberFollowing()-1);
 
             Map<String, Boolean> response = new HashMap<>();
             response.put("deleted", Boolean.TRUE);
             return response;
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 }

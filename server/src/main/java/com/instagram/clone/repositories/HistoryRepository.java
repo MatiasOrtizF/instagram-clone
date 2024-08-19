@@ -10,7 +10,4 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
 
     List<History> findBySearchingUser_Id(Long searchingUserId);
     boolean existsBySearchingUserAndSearchedUser(User searchingUser, User searchedUser);
-
-    History findBySearchingUserAndSearchedUser(User searchingUser, User searchedUser);
-
 }

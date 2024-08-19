@@ -58,7 +58,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editUser(@RequestBody User user, @RequestHeader(value = "Authorization") String token) {
+    public ResponseEntity<?> editUser(@RequestParam(name = "file", required = false) @RequestBody User user, @RequestHeader(value = "Authorization") String token) {
         try {
             return ResponseEntity.ok(userService.editPlayer(user, token));
         } catch (UnauthorizedException e) {

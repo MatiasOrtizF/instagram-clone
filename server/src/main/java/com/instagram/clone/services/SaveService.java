@@ -4,6 +4,8 @@ import com.instagram.clone.dto.PostDTO;
 import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
+import com.instagram.clone.exceptions.UserMismatchException;
+import com.instagram.clone.models.Like;
 import com.instagram.clone.models.Post;
 import com.instagram.clone.models.Save;
 import com.instagram.clone.models.User;
@@ -56,7 +58,7 @@ public class SaveService {
                 return response;
 
             } throw new AlreadyExistException("The user has already saved this post");
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
     public List<PostDTO> getAllSave(String token) {
@@ -68,15 +70,14 @@ public class SaveService {
             return posts.stream()
                     .map(post -> new PostDTO(post.getId(), post.getImage()))
                     .collect(Collectors.toList());
-
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
     public Boolean savedPost(Long postId, String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
             return saveRepository.existsByPostIdAndUserId(postId, userId);
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
     public Map<String, Boolean> unSavePost(Long postId, String token) {
@@ -89,6 +90,6 @@ public class SaveService {
             Map<String, Boolean> response = new HashMap<>();
             response.put("deleted", Boolean.TRUE);
             return response;
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 }

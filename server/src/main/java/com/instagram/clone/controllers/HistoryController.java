@@ -20,11 +20,11 @@ public class HistoryController {
         this.historyService = historyService;
     }
 
-    @PostMapping("{userId}")
-    public ResponseEntity<?> addHistory(@PathVariable Long userId, @RequestHeader (value = "Authorization") String token) {
+    @PostMapping("{userSearchedId}")
+    public ResponseEntity<?> addHistory(@PathVariable Long userSearchedId, @RequestHeader (value = "Authorization") String token) {
         try {
-            return ResponseEntity.ok(historyService.addHistory(userId, token));
-        }catch (AlreadyExistException e) {
+            return ResponseEntity.ok(historyService.addHistory(userSearchedId, token));
+        } catch (AlreadyExistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The user has already searched this user");
         }  catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist");
@@ -42,15 +42,14 @@ public class HistoryController {
         }
     }
 
-    @DeleteMapping("{userId}")
-    public ResponseEntity<String> deleteHistory(@PathVariable Long userId, @RequestHeader(value = "Authorization") String token) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteHistory(@PathVariable Long id, @RequestHeader(value = "Authorization") String token) {
         try {
-            historyService.deleteHistory(userId, token);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(historyService.deleteHistory(id, token));
         } catch (UserMismatchException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User Mismatch");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User mismatch: You do not have permission to delete this user of history");
         } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User searched does not exist");
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }

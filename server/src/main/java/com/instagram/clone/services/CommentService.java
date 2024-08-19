@@ -2,6 +2,7 @@ package com.instagram.clone.services;
 
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
+import com.instagram.clone.exceptions.UserMismatchException;
 import com.instagram.clone.models.Comment;
 import com.instagram.clone.models.Post;
 import com.instagram.clone.models.User;
@@ -10,9 +11,12 @@ import com.instagram.clone.repositories.PostRepository;
 import com.instagram.clone.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CommentService {
@@ -30,6 +34,7 @@ public class CommentService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public Comment commentPost (Long postId, String token, String comment) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
@@ -45,16 +50,60 @@ public class CommentService {
             newComment.setLikes(0);
 
             post.setComments(post.getComments()+1);
-            postRepository.save(post);
 
             return commentRepository.save(newComment);
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
-    public List<Comment> getAllComments(String token, Long id) {
+    public List<Comment> getAllComments (Long id, String token) {
         if(authService.validationToken(token)) {
             Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + id + " is incorrect"));
             return commentRepository.findCommentByPost(post);
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
+    }
+
+    @Transactional
+    public Map<String, Boolean> deleteComment(Long commentId, String token) {
+        if(authService.validationToken(token)) {
+            Long userId = authService.getUserId(token);
+            Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new ResourceNotFoundException("The comment with this id: " + commentId + " is incorrect"));
+            Long postId = comment.getPost().getId();
+            Post post = postRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("The comment with this id: " + commentId + " is incorrect"));
+
+            if(comment.getUser().getId().equals(userId)) {
+                commentRepository.delete(comment);
+
+                post.setComments(post.getComments()-1);
+
+                Map<String, Boolean> response = new HashMap<>();
+                response.put("deleted comment", Boolean.TRUE);
+                return response;
+            } throw new UserMismatchException("User mismatch");
+        } throw new UnauthorizedException();
+    }
+
+    // like comment
+    public Map<String, Boolean> likeCommentPost(Long commentId, String token) {
+        if(authService.validationToken(token)) {
+            Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new ResourceNotFoundException("The comment with this id: " + commentId + " is incorrect"));
+
+            comment.setLikes(comment.getLikes()+1);
+
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("liked", Boolean.TRUE);
+            return response;
+        } throw new UnauthorizedException();
+    }
+
+    public Map<String, Boolean> deleteLikeCommentPost(Long commentId, String token) {
+        if(authService.validationToken(token)) {
+            Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new ResourceNotFoundException("The comment with this id: " + commentId + " is incorrect"));
+
+            comment.setLikes(comment.getLikes()-1);
+
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("deleted like", Boolean.TRUE);
+            return response;
+        } throw new UnauthorizedException();
     }
 }

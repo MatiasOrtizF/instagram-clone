@@ -1,5 +1,7 @@
 package com.instagram.clone.controllers;
 
+import com.instagram.clone.exceptions.ImageProcessingException;
+import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.exceptions.UserMismatchException;
 import com.instagram.clone.models.Post;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.NoSuchElementException;
 
@@ -27,7 +30,7 @@ public class PostController {
         try {
             return ResponseEntity.ok(postService.getAllPosts(token));
         } catch (UnauthorizedException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 
@@ -36,16 +39,22 @@ public class PostController {
         try {
             return ResponseEntity.ok(postService.getPost(id));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Post does not exist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post does not exist");
         }
     }
 
     @PostMapping
-    public ResponseEntity<?> addPost(@RequestBody Post post, @RequestHeader(value = "Authorization")String token) {
+    public ResponseEntity<?> addPost(@RequestBody Post post, @RequestParam("image") MultipartFile file, @RequestHeader(value = "Authorization")String token) {
         try {
-            return ResponseEntity.ok(postService.addPost(post, token));
+            return ResponseEntity.ok(postService.addPost(file, post, token));
         } catch (UnauthorizedException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist");
+        } catch (ImageProcessingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

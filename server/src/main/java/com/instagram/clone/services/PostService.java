@@ -9,21 +9,27 @@ import com.instagram.clone.repositories.PostRepository;
 import com.instagram.clone.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.List;
 
 @Service
 public class PostService {
     private final PostRepository postRepository;
     private final AuthService authService;
     private final UserRepository userRepository;
+    private final ImageService imageService;
 
     @Autowired
-    public PostService(PostRepository postRepository, AuthService authService, UserRepository userRepository) {
+    public PostService(PostRepository postRepository, AuthService authService, UserRepository userRepository, ImageService imageService) {
         this.postRepository = postRepository;
         this.authService = authService;
         this.userRepository = userRepository;
+        this.imageService = imageService;
     }
 
     public List<Post> getAllPosts(String token) {
@@ -36,19 +42,26 @@ public class PostService {
         return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("The post with this id: " + id + "is not found"));
     }
 
-    public Post addPost(Post post, String token) {
+    public Map<String, Boolean> addPost(MultipartFile file, Post post, String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
 
-            User user =  userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("The user is not found"));
+            User user =  userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("The user with this id: " + userId + "is not found"));
             LocalDate dateNow = LocalDate.now();
 
-            post.setComments(0);
-            post.setLikes(0);
-            post.setUser(user);
-            post.setCreatedAt(dateNow);
+            if(!file.isEmpty()) {
+                post.setImage(imageService.encodeImage(file));
+                post.setComments(0);
+                post.setLikes(0);
+                post.setUser(user);
+                post.setCreatedAt(dateNow);
 
-            return postRepository.save(post);
+                postRepository.save(post);
+
+                Map<String, Boolean> response = new HashMap<>();
+                response.put("post created", Boolean.TRUE);
+                return response;
+            } throw new IllegalArgumentException("The file is empty");
         } throw new UnauthorizedException();
     }
 
@@ -63,7 +76,7 @@ public class PostService {
                 Map<String, Boolean> response = new HashMap<>();
                 response.put("deleted", Boolean.TRUE);
                 return response;
-            } throw new UserMismatchException();
+            } throw new UserMismatchException("User mismatch");
         } throw new UnauthorizedException();
     }
 
@@ -76,7 +89,7 @@ public class PostService {
                 post.setContent(newContent);
 
                 return postRepository.save(post);
-            } throw new UserMismatchException();
+            } throw new UserMismatchException("User mismatch");
         } throw new UnauthorizedException();
     }
 }

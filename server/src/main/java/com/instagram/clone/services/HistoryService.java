@@ -1,5 +1,8 @@
 package com.instagram.clone.services;
 
+import com.instagram.clone.dto.PostDTO;
+import com.instagram.clone.dto.UserDTO;
+import com.instagram.clone.dto.UserSearchDTO;
 import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
@@ -11,10 +14,15 @@ import com.instagram.clone.models.User;
 import com.instagram.clone.repositories.HistoryRepository;
 import com.instagram.clone.repositories.UserRepository;
 import com.instagram.clone.utils.JWTUtil;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class HistoryService {
@@ -32,39 +40,49 @@ public class HistoryService {
         this.userRepository = userRepository;
     }
 
-    public History addHistory (Long id, String token) {
+    public Map<String, Boolean> addHistory(Long userSearchedId, String token) {
         if(authService.validationToken(token)) {
-            String userId = jwtUtil.getKey(token);
-                User searchedUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("The post with this id: " + id + " is incorrect"));
-                User searchingUser = userRepository.findById(Long.valueOf(userId)).orElseThrow(() -> new ResourceNotFoundException("The post with this id: " + userId + " is incorrect"));
+            Long userId = authService.getUserId(token);
+                User searchedUser = userRepository.findById(userSearchedId).orElseThrow(() -> new ResourceNotFoundException("The user with this id: " + userSearchedId + " is incorrect"));
+                User searchingUser = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("The user with this id: " + userId + " is incorrect"));
             if(!historyRepository.existsBySearchingUserAndSearchedUser(searchingUser, searchedUser)) {
+
                 History history = new History();
                 history.setSearchedUser(searchedUser);
                 history.setSearchingUser(searchingUser);
 
-                return historyRepository.save(history);
+                historyRepository.save(history);
+
+                Map<String, Boolean> response = new HashMap<>();
+                response.put("searched", Boolean.TRUE);
+                return response;
             } throw new AlreadyExistException("The user has already searched this user");
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
-    public List<History> getHistory (String token) {
+    public List<UserSearchDTO> getHistory(String token) {
         if(authService.validationToken(token)) {
             String userId = jwtUtil.getKey(token);
-            return historyRepository.findBySearchingUser_Id(Long.valueOf(userId));
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+            List<History> histories = historyRepository.findBySearchingUser_Id(Long.valueOf(userId));
+
+            return histories.stream()
+                    .map(history -> new UserSearchDTO(history.getId(), history.getSearchedUser().getId(), history.getSearchedUser().getImageProfile(), history.getSearchedUser().getUserName(), history.getSearchedUser().getName(), history.getSearchedUser().getLastName(), history.getSearchedUser().getVerified()))
+                    .collect(Collectors.toList());
+        } throw new UnauthorizedException();
     }
 
-    public boolean deleteHistory(Long id, String token) {
+    public Map<String, Boolean> deleteHistory(Long id, String token) {
         if(authService.validationToken(token)) {
-            String userId = jwtUtil.getKey(token);
-            User searchedUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("The user with this id: " + id + " is incorrect"));
-            User searchingUser = userRepository.findById(Long.valueOf(userId)).orElseThrow(() -> new ResourceNotFoundException("The user with this id: " + userId + " is incorrect"));
+            Long userId = authService.getUserId(token);
 
-            History history = historyRepository.findBySearchingUserAndSearchedUser(searchingUser, searchedUser);
-            if(history.getSearchingUser().getId().equals(Long.valueOf(userId))) {
+            History history = historyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("The history with this id: " + id + " is incorrect"));
+            if(history.getSearchingUser().getId().equals(userId)) {
                 historyRepository.delete(history);
-                return true;
+
+                Map<String, Boolean> response = new HashMap<>();
+                response.put("deleted", Boolean.TRUE);
+                return response;
             } throw new UserMismatchException("User mismatch");
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 }

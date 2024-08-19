@@ -49,17 +49,16 @@ public class LikeService {
                 like.setUser(user);
                 like.setPost(post);
 
-                post.setLikes(post.getLikes()+1);
-                postRepository.save(post);
-
                 likeRepository.save(like);
+
+                post.setLikes(post.getLikes()+1);
 
                 Map<String, Boolean> response = new HashMap<>();
                 response.put("liked", Boolean.TRUE);
                 return response;
 
             } throw new AlreadyExistException("The user has already liked this post");
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
     public List<UserDTO> getUsersLikedPost(Long postId, String token) {
@@ -76,7 +75,7 @@ public class LikeService {
                     .map(user -> new UserDTO(user.getId(), user.getImageProfile(), user.getUserName(), user.getName(), user.getLastName(), user.getVerified()))
                     .collect(Collectors.toList());
 
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
     public List<PostDTO> getAllLikes(String token) {
@@ -89,26 +88,30 @@ public class LikeService {
                     .map(post -> new PostDTO(post.getId(), post.getImage()))
                     .collect(Collectors.toList());
 
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
     public Boolean likedPost(Long postId, String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
             return likeRepository.existsByPostIdAndUserId(postId, userId);
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 
+    @Transactional
     public Map<String, Boolean> deleteLikePost(Long postId, String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
             Like like = likeRepository.findByPostIdAndUserId(postId, userId);
+            Post post = postRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + postId + " is incorrect"));
 
             likeRepository.delete(like);
+
+            post.setLikes(post.getLikes()-1);
 
             Map<String, Boolean> response = new HashMap<>();
             response.put("deleted", Boolean.TRUE);
             return response;
-        } throw new UnauthorizedException("Unauthorized: invalid token");
+        } throw new UnauthorizedException();
     }
 }
