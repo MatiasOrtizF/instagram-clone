@@ -47,6 +47,17 @@ public class FollowerController {
     public ResponseEntity<?> deleteFollow(@PathVariable Long followingUserId, @RequestHeader(value = "Authorization")String token) {
         try {
             return ResponseEntity.ok(followerService.deleteFollow(followingUserId, token));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist");
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getFollowerUser(@RequestParam Long userId, @RequestHeader(value = "Authorization")String token) {
+        try {
+            return ResponseEntity.ok(followerService.getFollowerUser(userId, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }

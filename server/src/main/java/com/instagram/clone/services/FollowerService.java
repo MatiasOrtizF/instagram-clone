@@ -5,7 +5,6 @@ import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.models.Follower;
-import com.instagram.clone.models.Like;
 import com.instagram.clone.models.User;
 import com.instagram.clone.repositories.FollowerRepository;
 import com.instagram.clone.repositories.UserRepository;
@@ -87,4 +86,17 @@ public class FollowerService {
             return response;
         } throw new UnauthorizedException();
     }
+
+    public Map<String, Boolean> getFollowerUser(Long userId, String token) {
+        if(authService.validationToken(token)) {
+            Long followerUserId = authService.getUserId(token);
+
+            Boolean existsFollower =  followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(userId, followerUserId);
+
+                Map<String, Boolean> response = new HashMap<>();
+                response.put("followed", existsFollower);
+                return response;
+        } throw new UnauthorizedException();
+    }
+
 }
