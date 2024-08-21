@@ -55,9 +55,9 @@ public class FollowerController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getFollowerUser(@RequestParam Long userId, @RequestHeader(value = "Authorization")String token) {
+    public ResponseEntity<?> followedUser(@RequestParam Long userId, @RequestHeader(value = "Authorization")String token) {
         try {
-            return ResponseEntity.ok(followerService.getFollowerUser(userId, token));
+            return ResponseEntity.ok(followerService.followedUser(userId, token));
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
         }

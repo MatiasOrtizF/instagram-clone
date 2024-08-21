@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserSearchDTO {
+public class UserHistoryDTO {
+
+    private Long historyId;
+
     private Long id;
 
     private String imageProfile;

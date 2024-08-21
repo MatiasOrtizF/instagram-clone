@@ -20,4 +20,6 @@ public class UserDTO {
     private String lastName;
 
     private Boolean verified;
+
+    private Boolean followed;
 }

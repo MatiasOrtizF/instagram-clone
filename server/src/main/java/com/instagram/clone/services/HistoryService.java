@@ -1,23 +1,17 @@
 package com.instagram.clone.services;
 
-import com.instagram.clone.dto.PostDTO;
-import com.instagram.clone.dto.UserDTO;
-import com.instagram.clone.dto.UserSearchDTO;
+import com.instagram.clone.dto.UserHistoryDTO;
 import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.exceptions.UserMismatchException;
 import com.instagram.clone.models.History;
-import com.instagram.clone.models.Like;
-import com.instagram.clone.models.Post;
 import com.instagram.clone.models.User;
 import com.instagram.clone.repositories.HistoryRepository;
 import com.instagram.clone.repositories.UserRepository;
 import com.instagram.clone.utils.JWTUtil;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,13 +54,13 @@ public class HistoryService {
         } throw new UnauthorizedException();
     }
 
-    public List<UserSearchDTO> getHistory(String token) {
+    public List<UserHistoryDTO> getHistory(String token) {
         if(authService.validationToken(token)) {
             String userId = jwtUtil.getKey(token);
             List<History> histories = historyRepository.findBySearchingUser_Id(Long.valueOf(userId));
 
             return histories.stream()
-                    .map(history -> new UserSearchDTO(history.getId(), history.getSearchedUser().getId(), history.getSearchedUser().getImageProfile(), history.getSearchedUser().getUserName(), history.getSearchedUser().getName(), history.getSearchedUser().getLastName(), history.getSearchedUser().getVerified()))
+                    .map(history -> new UserHistoryDTO(history.getId(), history.getSearchedUser().getId(), history.getSearchedUser().getImageProfile(), history.getSearchedUser().getUserName(), history.getSearchedUser().getName(), history.getSearchedUser().getLastName(), history.getSearchedUser().getVerified()))
                     .collect(Collectors.toList());
         } throw new UnauthorizedException();
     }

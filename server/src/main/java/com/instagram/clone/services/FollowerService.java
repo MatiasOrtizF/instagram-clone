@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,10 +34,26 @@ public class FollowerService {
 
     public List<UserDTO> getAllFollowers(Long userId, String token) {
         if(authService.validationToken(token)) {
+            Long id = authService.getUserId(token);
             List<Follower> users = followerRepository.findByFollowingUser_Id(userId);
 
-            return users.stream()
-                    .map(follower -> new UserDTO(follower.getFollowerUser().getId(), follower.getFollowerUser().getImageProfile(), follower.getFollowerUser().getUserName(), follower.getFollowerUser().getName(), follower.getFollowerUser().getLastName(), follower.getFollowerUser().getVerified()))
+            List<Follower> newUsers =  users.stream()
+                    .filter(user -> !user.getFollowerUser().getId().equals(id))
+                    .toList();
+
+            return newUsers.stream()
+                    .map(follower -> {
+                        boolean isFollowed = followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(follower.getFollowerUser().getId(), id);
+                            return new UserDTO(
+                                    follower.getFollowerUser().getId(),
+                                    follower.getFollowerUser().getImageProfile(),
+                                    follower.getFollowerUser().getUserName(),
+                                    follower.getFollowerUser().getName(),
+                                    follower.getFollowerUser().getLastName(),
+                                    follower.getFollowerUser().getVerified(),
+                                    isFollowed
+                            );
+                    })
                     .collect(Collectors.toList());
 
         } throw new UnauthorizedException();
@@ -46,7 +63,7 @@ public class FollowerService {
     public Map<String, Boolean> addFollow(Long followingUserId, String token) {
         if(authService.validationToken(token)) {
             Long followerUserId = authService.getUserId(token);
-            if(!followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(followingUserId, followerUserId)) {
+            if(!followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(followingUserId, followerUserId) && !Objects.equals(followingUserId, followerUserId)) {
                 User userFollowing = userRepository.findById(followingUserId).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + followingUserId + " is incorrect"));
                 User userFollower = userRepository.findById(followerUserId).orElseThrow(()-> new ResourceNotFoundException("The user with this id: " + followerUserId + " is incorrect"));
 
@@ -82,20 +99,15 @@ public class FollowerService {
             userFollower.setNumberFollowing(userFollower.getNumberFollowing()-1);
 
             Map<String, Boolean> response = new HashMap<>();
-            response.put("deleted", Boolean.TRUE);
+            response.put("unfollowed", Boolean.TRUE);
             return response;
         } throw new UnauthorizedException();
     }
 
-    public Map<String, Boolean> getFollowerUser(Long userId, String token) {
+    public Boolean followedUser(Long userId, String token) {
         if(authService.validationToken(token)) {
             Long followerUserId = authService.getUserId(token);
-
-            Boolean existsFollower =  followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(userId, followerUserId);
-
-                Map<String, Boolean> response = new HashMap<>();
-                response.put("followed", existsFollower);
-                return response;
+            return followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(userId, followerUserId);
         } throw new UnauthorizedException();
     }
 

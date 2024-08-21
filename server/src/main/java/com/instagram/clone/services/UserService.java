@@ -2,6 +2,7 @@ package com.instagram.clone.services;
 
 import com.instagram.clone.dto.PostDTO;
 import com.instagram.clone.dto.UserDTO;
+import com.instagram.clone.dto.UserSearchDTO;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.models.Post;
@@ -57,7 +58,7 @@ public class UserService {
         } throw new UnauthorizedException();
     }
 
-    public List<UserDTO> getUserByUserName(String word, String token) {
+    public List<UserSearchDTO> getUserByUserName(String word, String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
 
@@ -68,7 +69,7 @@ public class UserService {
                     .toList();
 
             return newUsers.stream()
-                    .map(user -> new UserDTO(user.getId(), user.getImageProfile(), user.getUserName(), user.getName(), user.getLastName(), user.getVerified()))
+                    .map(user -> new UserSearchDTO(user.getId(), user.getImageProfile(), user.getUserName(), user.getName(), user.getLastName(), user.getVerified()))
                     .collect(Collectors.toList());
 
         } throw new UnauthorizedException();

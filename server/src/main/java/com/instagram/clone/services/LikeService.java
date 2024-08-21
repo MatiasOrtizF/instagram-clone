@@ -6,6 +6,7 @@ import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.models.*;
+import com.instagram.clone.repositories.FollowerRepository;
 import com.instagram.clone.repositories.LikeRepository;
 import com.instagram.clone.repositories.PostRepository;
 import com.instagram.clone.repositories.UserRepository;
@@ -25,16 +26,19 @@ public class LikeService {
     private final LikeRepository likeRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final FollowerRepository followerRepository;
 
     @Autowired
     public LikeService (AuthService authService,
                         LikeRepository likeRepository,
                         PostRepository postRepository,
-                        UserRepository userRepository) {
+                        UserRepository userRepository,
+                        FollowerRepository followerRepository) {
         this.authService = authService;
         this.likeRepository = likeRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.followerRepository = followerRepository;
     }
 
     @Transactional
@@ -72,7 +76,18 @@ public class LikeService {
                     .toList();
 
             return newUsers.stream()
-                    .map(user -> new UserDTO(user.getId(), user.getImageProfile(), user.getUserName(), user.getName(), user.getLastName(), user.getVerified()))
+                    .map(user -> {
+                        boolean isFollowed = followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(user.getId(), userId);
+                        return new UserDTO(
+                                user.getId(),
+                                user.getImageProfile(),
+                                user.getUserName(),
+                                user.getName(),
+                                user.getLastName(),
+                                user.getVerified(),
+                                isFollowed
+                        );
+                    })
                     .collect(Collectors.toList());
 
         } throw new UnauthorizedException();

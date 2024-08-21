@@ -25,10 +25,26 @@ public class FollowingService {
 
     public List<UserDTO> getAllFollowing(Long userId, String token) {
         if(authService.validationToken(token)) {
+            Long id = authService.getUserId(token);
             List<Follower> users = followerRepository.findByFollowerUser_Id(userId);
 
-            return users.stream()
-                    .map(following -> new UserDTO(following.getFollowingUser().getId(), following.getFollowingUser().getImageProfile(), following.getFollowingUser().getUserName(), following.getFollowingUser().getName(), following.getFollowingUser().getLastName(), following.getFollowingUser().getVerified()))
+            List<Follower> newUsers =  users.stream()
+                    .filter(user -> !user.getFollowingUser().getId().equals(id))
+                    .toList();
+
+            return newUsers.stream()
+                    .map(following -> {
+                        boolean isFollowed = followerRepository.existsByFollowingUser_IdAndFollowerUser_Id(following.getFollowingUser().getId(), id);
+                        return new UserDTO(
+                                following.getFollowingUser().getId(),
+                                following.getFollowingUser().getImageProfile(),
+                                following.getFollowingUser().getUserName(),
+                                following.getFollowingUser().getName(),
+                                following.getFollowingUser().getLastName(),
+                                following.getFollowingUser().getVerified(),
+                                isFollowed
+                        );
+                    })
                     .collect(Collectors.toList());
 
         } throw new UnauthorizedException("Unauthorized: invalid token");
