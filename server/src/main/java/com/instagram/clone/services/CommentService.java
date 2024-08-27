@@ -1,5 +1,6 @@
 package com.instagram.clone.services;
 
+import com.instagram.clone.dto.PostDTO;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.exceptions.UserMismatchException;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -35,7 +37,7 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment commentPost (Long postId, String token, String comment) {
+    public Comment commentPost(Long postId, String token, String comment) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
             Post post = postRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + postId + " is incorrect"));
@@ -55,10 +57,23 @@ public class CommentService {
         } throw new UnauthorizedException();
     }
 
-    public List<Comment> getAllComments (Long id, String token) {
+    public List<Comment> getAllComments(Long id, String token) {
         if(authService.validationToken(token)) {
             Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + id + " is incorrect"));
             return commentRepository.findCommentByPost(post);
+        } throw new UnauthorizedException();
+    }
+
+    public List<PostDTO> getAllMyComments(String token) {
+        if(authService.validationToken(token)) {
+            Long userId = authService.getUserId(token);
+
+            List<Post> posts = commentRepository.findPostByUserId(userId);
+
+            return posts.stream()
+                    .map(post -> new PostDTO(post.getId(), post.getImage()))
+                    .collect(Collectors.toList());
+
         } throw new UnauthorizedException();
     }
 

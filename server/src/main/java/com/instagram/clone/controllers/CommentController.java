@@ -43,6 +43,15 @@ public class CommentController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<?> getAllMyComments(@RequestHeader(value = "Authorization") String token) {
+        try {
+            return ResponseEntity.ok(commentService.getAllMyComments(token));
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: invalid token");
+        }
+    }
+
     @DeleteMapping("{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable Long commentId, @RequestHeader(value = "Authorization") String token) {
         try {
