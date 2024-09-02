@@ -1,11 +1,9 @@
 package com.instagram.clone.services;
 
-import com.instagram.clone.dto.PostDTO;
+import com.instagram.clone.dto.PostProfileDTO;
 import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
-import com.instagram.clone.exceptions.UserMismatchException;
-import com.instagram.clone.models.Like;
 import com.instagram.clone.models.Post;
 import com.instagram.clone.models.Save;
 import com.instagram.clone.models.User;
@@ -61,14 +59,14 @@ public class SaveService {
         } throw new UnauthorizedException();
     }
 
-    public List<PostDTO> getAllSave(String token) {
+    public List<PostProfileDTO> getAllSave(String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
 
             List<Post> posts = saveRepository.findPostByUserId(userId);
 
             return posts.stream()
-                    .map(post -> new PostDTO(post.getId(), post.getImage()))
+                    .map(post -> new PostProfileDTO(post.getId(), post.getImage()))
                     .collect(Collectors.toList());
         } throw new UnauthorizedException();
     }

@@ -1,6 +1,6 @@
 package com.instagram.clone.services;
 
-import com.instagram.clone.dto.PostDTO;
+import com.instagram.clone.dto.PostProfileDTO;
 import com.instagram.clone.dto.UserDTO;
 import com.instagram.clone.exceptions.AlreadyExistException;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
@@ -93,14 +93,14 @@ public class LikeService {
         } throw new UnauthorizedException();
     }
 
-    public List<PostDTO> getAllLikes(String token) {
+    public List<PostProfileDTO> getAllLikes(String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
 
             List<Post> posts = likeRepository.findPostByUserId(userId);
 
             return posts.stream()
-                    .map(post -> new PostDTO(post.getId(), post.getImage()))
+                    .map(post -> new PostProfileDTO(post.getId(), post.getImage()))
                     .collect(Collectors.toList());
 
         } throw new UnauthorizedException();

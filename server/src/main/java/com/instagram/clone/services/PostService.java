@@ -1,21 +1,26 @@
 package com.instagram.clone.services;
 
+import com.instagram.clone.dto.CommentDTO;
+import com.instagram.clone.dto.PostDTO;
+import com.instagram.clone.dto.UserDTO;
+import com.instagram.clone.dto.UserPostDTO;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.exceptions.UserMismatchException;
 import com.instagram.clone.models.Post;
 import com.instagram.clone.models.User;
+import com.instagram.clone.repositories.LikeRepository;
 import com.instagram.clone.repositories.PostRepository;
+import com.instagram.clone.repositories.SaveRepository;
 import com.instagram.clone.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -23,18 +28,47 @@ public class PostService {
     private final AuthService authService;
     private final UserRepository userRepository;
     private final ImageService imageService;
+    private final LikeRepository likeRepository;
+    private final SaveRepository saveRepository;
 
     @Autowired
-    public PostService(PostRepository postRepository, AuthService authService, UserRepository userRepository, ImageService imageService) {
+    public PostService(PostRepository postRepository,
+                       AuthService authService,
+                       UserRepository userRepository,
+                       ImageService imageService,
+                       LikeRepository likeRepository,
+                       SaveRepository saveRepository) {
         this.postRepository = postRepository;
         this.authService = authService;
         this.userRepository = userRepository;
         this.imageService = imageService;
+        this.likeRepository = likeRepository;
+        this.saveRepository = saveRepository;
     }
 
-    public List<Post> getAllPosts(String token) {
+    public List<PostDTO> getAllPosts(String token) {
         if(authService.validationToken(token)) {
-            return postRepository.findAll();
+            Long userId = authService.getUserId(token);
+            List<Post> posts = postRepository.findAllOrderByCreatedAtDesc();
+
+            return posts.stream()
+                    .map(post -> {
+                        boolean isLiked = likeRepository.existsByPostIdAndUserId(post.getId(), userId);
+                        boolean isSaved = saveRepository.existsByPostIdAndUserId(post.getId(), userId);
+                        UserPostDTO userPostDTO = new UserPostDTO(post.getUser().getId(), post.getUser().getImageProfile(), post.getUser().getUserName());
+                        return new PostDTO(
+                                post.getId(),
+                                userPostDTO,
+                                post.getImage(),
+                                post.getLikes(),
+                                post.getContent(),
+                                post.getComments(),
+                                post.getCreatedAt(),
+                                isLiked,
+                                isSaved
+                        );
+                    })
+                    .collect(Collectors.toList());
         } throw new UnauthorizedException();
     }
 

@@ -1,11 +1,8 @@
 package com.instagram.clone.services;
 
-import com.instagram.clone.dto.PostDTO;
-import com.instagram.clone.dto.UserDTO;
 import com.instagram.clone.dto.UserSearchDTO;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
-import com.instagram.clone.models.Post;
 import com.instagram.clone.models.User;
 import com.instagram.clone.models.UserRequest;
 import com.instagram.clone.repositories.UserRepository;

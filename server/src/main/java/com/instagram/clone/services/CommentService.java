@@ -1,12 +1,15 @@
 package com.instagram.clone.services;
 
-import com.instagram.clone.dto.PostDTO;
+import com.instagram.clone.dto.CommentDTO;
+import com.instagram.clone.dto.PostProfileDTO;
+import com.instagram.clone.dto.UserDTO;
 import com.instagram.clone.exceptions.ResourceNotFoundException;
 import com.instagram.clone.exceptions.UnauthorizedException;
 import com.instagram.clone.exceptions.UserMismatchException;
 import com.instagram.clone.models.Comment;
 import com.instagram.clone.models.Post;
 import com.instagram.clone.models.User;
+import com.instagram.clone.repositories.CommentLikeRepository;
 import com.instagram.clone.repositories.CommentRepository;
 import com.instagram.clone.repositories.PostRepository;
 import com.instagram.clone.repositories.UserRepository;
@@ -27,13 +30,19 @@ public class CommentService {
     private final AuthService authService;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final CommentLikeRepository commentLikeRepository;
 
     @Autowired
-    public CommentService (CommentRepository commentRepository, AuthService authService, PostRepository postRepository, UserRepository userRepository) {
+    public CommentService (CommentRepository commentRepository,
+                           AuthService authService,
+                           PostRepository postRepository,
+                           UserRepository userRepository,
+                           CommentLikeRepository commentLikeRepository) {
         this.commentRepository = commentRepository;
         this.authService = authService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.commentLikeRepository = commentLikeRepository;
     }
 
     @Transactional
@@ -57,21 +66,38 @@ public class CommentService {
         } throw new UnauthorizedException();
     }
 
-    public List<Comment> getAllComments(Long id, String token) {
+    public List<CommentDTO> getAllComments(Long id, String token) {
         if(authService.validationToken(token)) {
+            Long userId = authService.getUserId(token);
             Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The post with this id: " + id + " is incorrect"));
-            return commentRepository.findCommentByPost(post);
+
+            List<Comment> comments = commentRepository.findCommentByPost(post);
+
+            return comments.stream()
+                    .map(comment -> {
+                        boolean isLiked = commentLikeRepository.existsByCommentIdAndUserId(comment.getId(), userId);
+                        UserDTO userDTO = new UserDTO(comment.getUser().getId(), comment.getUser().getImageProfile(),  comment.getUser().getUserName(), comment.getUser().getName(), comment.getUser().getLastName(), comment.getUser().getVerified(), false);
+                        return new CommentDTO(
+                                comment.getId(),
+                                userDTO,
+                                comment.getContent(),
+                                comment.getCreatedAt(),
+                                comment.getLikes(),
+                                isLiked
+                        );
+                    })
+                    .collect(Collectors.toList());
         } throw new UnauthorizedException();
     }
 
-    public List<PostDTO> getAllMyComments(String token) {
+    public List<PostProfileDTO> getAllMyComments(String token) {
         if(authService.validationToken(token)) {
             Long userId = authService.getUserId(token);
 
             List<Post> posts = commentRepository.findPostByUserId(userId);
 
             return posts.stream()
-                    .map(post -> new PostDTO(post.getId(), post.getImage()))
+                    .map(post -> new PostProfileDTO(post.getId(), post.getImage()))
                     .collect(Collectors.toList());
 
         } throw new UnauthorizedException();

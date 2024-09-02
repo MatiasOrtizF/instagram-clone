@@ -15,4 +15,5 @@ public class CommentDTO {
     private String content;
     private LocalDate createdAt;
     private Integer likes;
+    private Boolean liked;
 }
